@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ADRI\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj": {}
+    "D:\\CE_Adri\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj": {}
   },
   "projects": {
-    "D:\\ADRI\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj": {
+    "D:\\CE_Adri\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ADRI\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj",
+        "projectUniqueName": "D:\\CE_Adri\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj",
         "projectName": "PiedraPapelTijera",
-        "projectPath": "D:\\ADRI\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj",
+        "projectPath": "D:\\CE_Adri\\Motores\\Ejercicios\\PiedraPapelTijera\\PiedraPapelTijera.csproj",
         "packagesPath": "C:\\Users\\alumno\\.nuget\\packages\\",
-        "outputPath": "D:\\ADRI\\Motores\\Ejercicios\\PiedraPapelTijera\\obj\\",
+        "outputPath": "D:\\CE_Adri\\Motores\\Ejercicios\\PiedraPapelTijera\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

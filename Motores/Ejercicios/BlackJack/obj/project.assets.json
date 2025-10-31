@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ADRI\\Motores\\Ejercicios\\BlackJack\\BlackJack.csproj",
+      "projectUniqueName": "D:\\CE_Adri\\Motores\\Ejercicios\\BlackJack\\BlackJack.csproj",
       "projectName": "BlackJack",
-      "projectPath": "D:\\ADRI\\Motores\\Ejercicios\\BlackJack\\BlackJack.csproj",
+      "projectPath": "D:\\CE_Adri\\Motores\\Ejercicios\\BlackJack\\BlackJack.csproj",
       "packagesPath": "C:\\Users\\alumno\\.nuget\\packages\\",
-      "outputPath": "D:\\ADRI\\Motores\\Ejercicios\\BlackJack\\obj\\",
+      "outputPath": "D:\\CE_Adri\\Motores\\Ejercicios\\BlackJack\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
