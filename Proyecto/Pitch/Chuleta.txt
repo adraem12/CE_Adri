@@ -1,0 +1,13 @@
+-Cámara: 
+Heaven on the Way cuenta con una vista isométrica dinámica, permitiéndote analizar el escenario para que puedas planear correctamente tu estrategia en los momentos de combate y facilitando la vista en los momentos de gestión
+- Controles:
+El juego está pensado para jugarse con teclado y ratón, pero habrá una adaptación para mando:
+En teclado, al ser la interfaz un menú, funcionará utilizando shortcuts y clicks del ratón para seleccionar las diferentes opciones.
+En mando, se adaptarían estos controles sustituyendo el puntero del ratón por un puntero al estilo de juegos como Destiny
+-Personajes:
+El jugador controlará un grupo de supervivientes, aunque en el tema narrativo vivirá el punto de vista de uno concreto y podrá interactuar con el resto.
+Cada personaje contará con una clase diferente y aprenderá un set de habilidades único de esa clase, como por ejemplo:
+Avanzadilla: Con sigilo, se infiltra en las filas enemigas para localizar o ejecutar objetivos.
+Tirador: Gran puntería con armas de fuego de gran calibre, cambiantes dependiendo de la situación.
+Rompelíneas: Resiste bien los golpes y desmonta las defensas enemigas atravesándolas.
+Médico: A parte de saber disparar también armas de fuego de pequeño calibre, puede recuperar la salud del resto del grupo.
