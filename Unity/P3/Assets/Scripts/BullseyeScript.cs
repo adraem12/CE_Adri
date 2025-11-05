@@ -8,8 +8,8 @@ public class BullseyeScript : MonoBehaviour
 
     private void Update()
     {
-        if (collisionCount == 1)
-            transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+        if (collisionCount == 2)
+            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
