@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class BullseyeScript : MonoBehaviour
@@ -12,7 +11,7 @@ public class BullseyeScript : MonoBehaviour
             transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         switch (collisionCount)
         {
