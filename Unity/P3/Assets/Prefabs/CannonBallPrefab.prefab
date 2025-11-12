@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4805604594398859768}
   - component: {fileID: 7923095600114899315}
   - component: {fileID: 6440053073706419497}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CannonBallPrefab
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

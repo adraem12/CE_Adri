@@ -1,32 +1,19 @@
+using System;
 using UnityEngine;
 
 public class BullseyeScript : MonoBehaviour
 {
-    int collisionCount = 0;
+    // Variables
     public float rotationSpeed;
-
-    private void Update()
-    {
-        if (collisionCount == 2)
-            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (collisionCount)
+        if (other.gameObject.layer == LayerMask.NameToLayer("CannonBall")) // Recibe impacto de bala
         {
-            case 0:
-                GetComponent<MeshRenderer>().material.color = Color.red;
-                collisionCount++;
-                break;
-            case 1:
-                collisionCount++;
-                break;
-            case 2:
-                transform.rotation = Quaternion.Euler(90, 0, 0);
-                Destroy(gameObject);
-                collisionCount++;
-                break;
+            GameManager.Instance.SpawnBullseye(Convert.ToInt32(transform.parent.name));
+            GameManager.Instance.cannonBallList.Remove(other.gameObject);
+            Destroy(other.gameObject);
+            Destroy(gameObject);
         }
     }
 }
