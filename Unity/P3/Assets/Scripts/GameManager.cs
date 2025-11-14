@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<GameObject> cannonBallList = new();
     public Controls controls;
     readonly List<Transform> spawns = new();
-    int hits = 0;
+    int hits = -1;
 
     private void OnEnable() // Activa los controles
     {
