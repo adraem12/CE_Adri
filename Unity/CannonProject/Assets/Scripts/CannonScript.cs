@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class CannonScript : MonoBehaviour
@@ -11,9 +10,9 @@ public class CannonScript : MonoBehaviour
     public Material whiteMaterial;
     public Material redMaterial;
     public float cannonForce;
+    [HideInInspector] public float currentForce = 0;
     MeshRenderer meshRenderer;
-    readonly List<Color> cannonBallColors = new() { Color.red, Color.blue, Color.green, Color.black, Color.white };
-    Collider[] nearBalls;
+    float materialTimer = 0;
 
     private void Awake()
     {
@@ -29,26 +28,34 @@ public class CannonScript : MonoBehaviour
 
     private void Update()
     {
-        transform.LookAt(cross.position + Vector3.up * 2f); // Apunta hacia la mirilla
-        nearBalls = new Collider[1];
-        // Busca si hay alguna bala cerca
-        Physics.OverlapSphereNonAlloc(cannonTip.position + cannonTip.up * 1f, 1.2f, nearBalls, LayerMask.GetMask("CannonBall"));
-        if (nearBalls[0] != null)
-            meshRenderer.material = redMaterial;
-        else
-            meshRenderer.material = whiteMaterial;
+        cannonBody.LookAt(cross.position + Vector3.up * 2f); // Apunta hacia la mirilla
+        if (materialTimer != 0) // Contador del material
+        {
+            materialTimer -= Time.deltaTime;
+            if (materialTimer < 0)
+            {
+                meshRenderer.material = whiteMaterial;
+                materialTimer = 0;
+            }
+        }
     }
 
-    public void Shoot(bool random)
+    public void Shoot()
     {
-        float mult = random ? UnityEngine.Random.Range(0.1f, 2.1f) : 1f; // Randomiza o no la fuerza
         Rigidbody newBall = Instantiate(GameManager.Instance.cannonBallPrefab, cannonTip.position, Quaternion.identity).GetComponent<Rigidbody>();
-        if (random) // Randomiza la escala y el color
+        newBall.AddForce(cannonForce * currentForce * cannonTip.up.normalized, ForceMode.Impulse); // Impulsa la bola en la dirección del cañón
+        materialTimer = 0.15f; // Resetea los valores tras disparar
+        meshRenderer.material = redMaterial;
+    }
+
+    public IEnumerator ChargeCannon()
+    {
+        currentForce = 0;
+        while (currentForce < 3) // Carga la fuerza hasta llegar al máximo
         {
-            newBall.transform.localScale = Vector3.one * UnityEngine.Random.Range(0.1f, 2.1f);
-            newBall.gameObject.GetComponent<MeshRenderer>().material.color = cannonBallColors[UnityEngine.Random.Range(0, 5)];
+            yield return new WaitForFixedUpdate();
+            currentForce += Time.deltaTime * 1.5f;
         }
-        newBall.AddForce(cannonForce * mult * cannonTip.up.normalized, ForceMode.Impulse); // Impulsa la bola en la dirección del cañón
-        GameManager.Instance.cannonBallList.Add(newBall.gameObject);
+        currentForce = 3;
     }
 }

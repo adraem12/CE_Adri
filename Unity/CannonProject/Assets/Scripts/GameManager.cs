@@ -6,16 +6,17 @@ public class GameManager : MonoBehaviour
 {
     //Variables
     public static GameManager Instance { get; private set; }
-    public TextMeshProUGUI ballText;
+    public TextMeshProUGUI shotsText;
     public TextMeshProUGUI hitText;
+    public TextMeshProUGUI forceText;
     public GameObject cannonBallPrefab;
     public GameObject bullseyePrefab;
     public Transform cross;
     CannonScript cannon;
-    [HideInInspector] public List<GameObject> cannonBallList = new();
     public Controls controls;
     readonly List<Transform> spawns = new();
     int hits = -1;
+    int shots = 0;
 
     private void OnEnable() // Activa los controles
     {
@@ -34,29 +35,27 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < GameObject.Find("Spawns").transform.childCount; i++)
             spawns.Add(GameObject.Find("Spawns").transform.GetChild(i));
         Instance = this; // Crea la instancia del Game Manager
-        ballText.text = "Balas: 0";
+        shotsText.text = "Shots: 0";
         hitText.text = "Hits: 0";
         SpawnBullseye(0); // Crea la primera diana
     }
 
-    public void Button1() // Disparo normal
+    private void Update()
     {
-        cannon.Shoot(false);
-        ballText.text = "Balas: " + cannonBallList.Count;
+        forceText.text = "Force: " + cannon.currentForce.ToString("0.00") + "/3";
     }
 
-    public void Button2() // Borrar balas
+    public void Button1Down() // Empezar disparo cargado
     {
-        foreach (var ball in cannonBallList)
-            Destroy(ball);
-        cannonBallList.Clear();
-        ballText.text = "Balas: " + cannonBallList.Count;
+        cannon.StartCoroutine(cannon.ChargeCannon());
     }
 
-    public void Button3() // Disparo aleatorio
+    public void Button1Up() // Acabar disparo cargado
     {
-        cannon.Shoot(true);
-        ballText.text = "Balas: " + cannonBallList.Count;
+        cannon.StopAllCoroutines();
+        cannon.Shoot();
+        shots++;
+        shotsText.text = "Shots: " + shots;
     }
 
     public void SpawnBullseye(int oldIndex) // Genera una nueva diana
@@ -66,7 +65,6 @@ public class GameManager : MonoBehaviour
             newIndex = Random.Range(1, spawns.Count + 1);
         Transform newParent = spawns[newIndex - 1];
         Instantiate(bullseyePrefab, newParent);
-        ballText.text = "Balas: " + cannonBallList.Count;
         hits++;
         hitText.text = "Hits: " + hits;
     }
