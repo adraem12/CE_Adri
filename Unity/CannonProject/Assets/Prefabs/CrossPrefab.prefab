@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1e3f0a53c5c0e48bc1162167270b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossScript
-  speed: 20
+  speed: 10
   maxMove: {x: 20, y: 8}
 --- !u!1 &7216375733296096925
 GameObject:

@@ -11,7 +11,7 @@ public class BullseyeScript : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("CannonBall")) // Recibe impacto de bala
         {
             Destroy(other.gameObject);
-            GameManager.Instance.SpawnBullseye(Convert.ToInt32(transform.parent.name));
+            GameManager.Instance.SpawnBullseye();
             Destroy(gameObject);
         }
     }

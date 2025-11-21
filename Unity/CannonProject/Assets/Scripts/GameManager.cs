@@ -1,22 +1,18 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //Variables
     public static GameManager Instance { get; private set; }
-    public TextMeshProUGUI shotsText;
-    public TextMeshProUGUI hitText;
-    public TextMeshProUGUI forceText;
+
+    //Variables
     public GameObject cannonBallPrefab;
     public GameObject bullseyePrefab;
-    public Transform cross;
-    CannonScript cannon;
+    public CrossScript cross;
+    [HideInInspector] public CannonScript cannon;
     public Controls controls;
-    readonly List<Transform> spawns = new();
-    int hits = -1;
-    int shots = 0;
+    [HideInInspector] public int hits = -1;
+    [HideInInspector] public int shots = 0;
 
     private void OnEnable() // Activa los controles
     {
@@ -32,40 +28,42 @@ public class GameManager : MonoBehaviour
     {
         controls = new();
         cannon = FindFirstObjectByType<CannonScript>();
-        for (int i = 0; i < GameObject.Find("Spawns").transform.childCount; i++)
-            spawns.Add(GameObject.Find("Spawns").transform.GetChild(i));
         Instance = this; // Crea la instancia del Game Manager
-        shotsText.text = "Shots: 0";
-        hitText.text = "Hits: 0";
-        SpawnBullseye(0); // Crea la primera diana
+    }
+
+    private void Start()
+    {
+        SpawnBullseye(); // Crea la primera diana
     }
 
     private void Update()
     {
-        forceText.text = "Force: " + cannon.currentForce.ToString("0.00") + "/3";
+        
     }
 
-    public void Button1Down() // Empezar disparo cargado
+    public void ButtonDown() // Cuando se clicka
     {
         cannon.StartCoroutine(cannon.ChargeCannon());
     }
 
-    public void Button1Up() // Acabar disparo cargado
+    public void ButtonUp() // Cuando se deja de clickar
     {
         cannon.StopAllCoroutines();
-        cannon.Shoot();
-        shots++;
-        shotsText.text = "Shots: " + shots;
+        Shoot();
     }
 
-    public void SpawnBullseye(int oldIndex) // Genera una nueva diana
+    public void Shoot() // Acabar disparo cargado
     {
-        int newIndex = Random.Range(1, spawns.Count + 1);
-        while (newIndex == oldIndex) // Spawn aleatorio que no se repite
-            newIndex = Random.Range(1, spawns.Count + 1);
-        Transform newParent = spawns[newIndex - 1];
-        Instantiate(bullseyePrefab, newParent);
+        cannon.Shoot();
+        shots++;
+        UIManager.Instance.ShotUI(shots);
+    }
+
+    public void SpawnBullseye() // Genera una nueva diana
+    {
+        Vector3 newSpawn = new(Random.Range(cross.GetMaxMoveX().x, cross.GetMaxMoveX().y), Random.Range(cross.GetMaxMoveY().x, cross.GetMaxMoveY().y), cross.transform.position.z);
+        Instantiate(bullseyePrefab, newSpawn, Quaternion.identity);
         hits++;
-        hitText.text = "Hits: " + hits;
+        UIManager.Instance.HitUI(hits);
     }
 }

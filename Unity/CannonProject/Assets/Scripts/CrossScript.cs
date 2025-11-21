@@ -25,6 +25,11 @@ public class CrossScript : MonoBehaviour
         GameManager.Instance.controls.Player.Move.performed += ReadMoveInput;
         GameManager.Instance.controls.Player.Move.canceled += ReadMoveInput;
     }
+    void Update()
+    {
+        transform.LookAt(cam.position);
+        Move();
+    }
 
     void ReadMoveInput(InputAction.CallbackContext context) // Lee WASD
     {
@@ -33,16 +38,19 @@ public class CrossScript : MonoBehaviour
         moveVector *= .01f * speed;
     }
 
-
-    void Update()
-    {
-        transform.LookAt(cam.position);
-        Move();
-    }
-
     void Move() // Movimiento de la mirilla
     {
         Vector3 newPosition = transform.position + moveVector;
         transform.position = new Vector3(Mathf.Clamp(newPosition.x, localMaxMoveX.x, localMaxMoveX.y), Mathf.Clamp(newPosition.y, localMaxMoveY.x, localMaxMoveY.y), transform.position.z);
+    }
+
+    public Vector3 GetMaxMoveX()
+    {
+        return localMaxMoveX;
+    }
+
+    public Vector3 GetMaxMoveY()
+    {
+        return localMaxMoveY;
     }
 }
