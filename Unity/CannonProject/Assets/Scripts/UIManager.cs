@@ -12,10 +12,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI aimText;
     public TextMeshProUGUI forceText;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI victoryText;
     public GameObject menuPanel;
     public GameObject gamePanel;
     public GameObject endPanel;
     public Slider forceSlider;
+    public Toggle hardModeToggle;
     CannonScript cannon;
 
     private void Awake()
@@ -44,12 +46,16 @@ public class UIManager : MonoBehaviour
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void GameUIOff()
+    public void GameUIOff(bool win)
     {
         gamePanel.SetActive(false);
         shotsText.text = "Shots: " + GameManager.Instance.shots;
         hitText.text = "Hits: " + GameManager.Instance.hits;
         aimText.text = "Aim : " + (Mathf.Round((float)GameManager.Instance.hits / (float)GameManager.Instance.shots * 10000f) / 100f) + "%";
+        if (win)
+            victoryText.text = "You win!";
+        else
+            victoryText.text = "You lose :(";
         endPanel.SetActive(true);
     }
 

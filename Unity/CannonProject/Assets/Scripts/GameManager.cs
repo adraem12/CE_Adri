@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int hits = -1;
     [HideInInspector] public int shots = 0;
     public int timeLeft = 0;
-    [HideInInspector] public bool hardMode = false;
+    bool hardMode;
 
     private void OnEnable() // Activa los controles
     {
@@ -49,7 +49,10 @@ public class GameManager : MonoBehaviour
         Vector3 newSpawn = new(Random.Range(cross.GetMaxMoveX().x, cross.GetMaxMoveX().y), Random.Range(cross.GetMaxMoveY().x, cross.GetMaxMoveY().y), cross.transform.position.z);
         Instantiate(bullseyePrefab, newSpawn, Quaternion.identity);
         hits++;
-        timeLeft += 3;
+        if (!hardMode)
+            timeLeft += 3;
+        else
+            timeLeft += 1;
         UIManager.Instance.TimeUI(timeLeft);
     }
 
@@ -70,20 +73,30 @@ public class GameManager : MonoBehaviour
         cannon.gameObject.SetActive(false);
         cross.gameObject.SetActive(false);
         Destroy(FindAnyObjectByType<BullseyeScript>().gameObject);
-        Destroy(GameObject.FindGameObjectWithTag("Ball"));
-        UIManager.Instance.GameUIOff();
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+        if (balls.Length > 0 )
+            foreach (var ball in balls) 
+                Destroy(ball);
+        if (hits >= 10 && hits >= shots/2)
+            UIManager.Instance.GameUIOff(true);
+        else
+            UIManager.Instance.GameUIOff(false);
     }
 
     public void StartGame()
     {
-        StartCoroutine(Timer(10));
+        hardMode = UIManager.Instance.hardModeToggle.isOn;
+        if (hardMode)
+            StartCoroutine(Timer(15));
+        else
+            StartCoroutine(Timer(20));
         cannon.gameObject.SetActive(true);
         cross.gameObject.SetActive(true);
         UIManager.Instance.GameUIOn();
         SpawnBullseye(); // Crea la primera diana
     }
 
-    public void ExitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
