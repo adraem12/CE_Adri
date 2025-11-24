@@ -9,7 +9,12 @@ public class UIManager : MonoBehaviour
     // Variables
     public TextMeshProUGUI shotsText;
     public TextMeshProUGUI hitText;
+    public TextMeshProUGUI aimText;
     public TextMeshProUGUI forceText;
+    public TextMeshProUGUI timeText;
+    public GameObject menuPanel;
+    public GameObject gamePanel;
+    public GameObject endPanel;
     public Slider forceSlider;
     CannonScript cannon;
 
@@ -32,13 +37,31 @@ public class UIManager : MonoBehaviour
         forceText.text = Mathf.Floor(cannon.currentForce).ToString();
     }
 
-    public void ShotUI(int i)
+    public void TimeUI(int i)
     {
-        shotsText.text = "Shots: " + i;
+        int minutes = Mathf.FloorToInt(i / 60);
+        int seconds = Mathf.FloorToInt(i % 60);
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void HitUI(int i)
+    public void GameUIOff()
     {
-        hitText.text = "Hits: " + i;
+        gamePanel.SetActive(false);
+        shotsText.text = "Shots: " + GameManager.Instance.shots;
+        hitText.text = "Hits: " + GameManager.Instance.hits;
+        aimText.text = "Aim : " + (Mathf.Round((float)GameManager.Instance.hits / (float)GameManager.Instance.shots * 10000f) / 100f) + "%";
+        endPanel.SetActive(true);
+    }
+
+    public void GameUIOn()
+    {
+        menuPanel.SetActive(false);
+        gamePanel.SetActive(true);
+    }
+
+    public void MenuUIOn()
+    {
+        menuPanel.SetActive(true);
+        endPanel.SetActive(false);
     }
 }
