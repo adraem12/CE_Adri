@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public CrossScript cross;
     public CannonScript cannon;
     public Controls controls;
-    [HideInInspector] public int hits = -1;
+    [HideInInspector] public int hits = 0;
     [HideInInspector] public int shots = 0;
     public int timeLeft = 0;
     bool hardMode;
@@ -44,15 +44,26 @@ public class GameManager : MonoBehaviour
         shots++;
     }
 
-    public void SpawnBullseye() // Genera una nueva diana
+    public void SpawnBullseye(bool hit, Vector3 lastPosition) // Genera una nueva diana
     {
-        Vector3 newSpawn = new(Random.Range(cross.GetMaxMoveX().x, cross.GetMaxMoveX().y), Random.Range(cross.GetMaxMoveY().x, cross.GetMaxMoveY().y), cross.transform.position.z);
-        Instantiate(bullseyePrefab, newSpawn, Quaternion.identity);
-        hits++;
+        float maxDistance;
+        int newTimer;
+        if (hit) hits++;
         if (!hardMode)
-            timeLeft += 3;
+        {
+            maxDistance = 3f;
+            newTimer = 5;
+            if (hit) timeLeft += 3;
+        }
         else
-            timeLeft += 1;
+        {
+            maxDistance = 8;
+            newTimer = 3;
+            if (hit) timeLeft += 1;
+        }
+        float newX = Mathf.Clamp(Random.Range(lastPosition.x - maxDistance, lastPosition.x + maxDistance), cross.GetMaxMoveX().x, cross.GetMaxMoveX().y);
+        float newY = Mathf.Clamp(Random.Range(lastPosition.y - maxDistance, lastPosition.y + maxDistance), cross.GetMaxMoveY().x, cross.GetMaxMoveY().y);
+        Instantiate(bullseyePrefab, new Vector3(newX, newY, cross.transform.position.z), Quaternion.identity).GetComponent<BullseyeScript>().timer = newTimer;
         UIManager.Instance.TimeUI(timeLeft);
     }
 
@@ -93,7 +104,7 @@ public class GameManager : MonoBehaviour
         cannon.gameObject.SetActive(true);
         cross.gameObject.SetActive(true);
         UIManager.Instance.GameUIOn();
-        SpawnBullseye(); // Crea la primera diana
+        SpawnBullseye(false, new Vector3(0, 10, -20)); // Crea la primera diana
     }
 
     public void QuitGame()

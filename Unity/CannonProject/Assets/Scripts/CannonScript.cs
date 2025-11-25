@@ -8,18 +8,13 @@ public class CannonScript : MonoBehaviour
     public Transform cannonBodyV;
     public Transform cannonTip;
     Transform cross;
-    public Material whiteMaterial;
+    public Material baseMaterial;
     public Material redMaterial;
     public float cannonForce;
     [HideInInspector] public float currentForce = 0;
     [HideInInspector] public int maxForce = 100;
-    MeshRenderer meshRenderer;
+    public MeshRenderer[] meshRenderers;
     float materialTimer = 0;
-
-    private void Awake()
-    {
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
-    }
 
     private void Start()
     {
@@ -35,7 +30,8 @@ public class CannonScript : MonoBehaviour
             materialTimer -= Time.deltaTime;
             if (materialTimer < 0)
             {
-                meshRenderer.material = whiteMaterial;
+                foreach (MeshRenderer mr in meshRenderers)
+                    mr.material = baseMaterial;
                 materialTimer = 0;
             }
         }
@@ -46,7 +42,8 @@ public class CannonScript : MonoBehaviour
         Rigidbody newBall = Instantiate(GameManager.Instance.cannonBallPrefab, cannonTip.position, Quaternion.identity).GetComponent<Rigidbody>();
         newBall.AddForce(cannonForce * (currentForce / 35) * cannonTip.up.normalized, ForceMode.Impulse); // Impulsa la bola en la dirección del cañón
         materialTimer = 0.15f; // Resetea los valores tras disparar
-        meshRenderer.material = redMaterial;
+        foreach (MeshRenderer mr in meshRenderers)
+            mr.material = redMaterial;
     }
 
     public IEnumerator ChargeCannon()

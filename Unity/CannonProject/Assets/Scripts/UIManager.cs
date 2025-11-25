@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI victoryText;
     public GameObject menuPanel;
+    public GameObject creditsPanel;
     public GameObject gamePanel;
     public GameObject endPanel;
     public Slider forceSlider;
@@ -67,7 +68,19 @@ public class UIManager : MonoBehaviour
 
     public void MenuUIOn()
     {
-        menuPanel.SetActive(true);
         endPanel.SetActive(false);
+        menuPanel.SetActive(true);
+    }
+
+    public void CreditsUIOn()
+    {
+        menuPanel.SetActive(false);
+        creditsPanel.SetActive(true);
+    }
+
+    public void CreditsUIOff()
+    {
+        creditsPanel.SetActive(false);
+        menuPanel.SetActive(true);
     }
 }

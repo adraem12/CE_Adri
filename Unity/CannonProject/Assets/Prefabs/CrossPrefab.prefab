@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossScript
   speed: 10
-  maxMove: {x: 20, y: 8}
+  maxMove: {x: 19, y: 8}
 --- !u!1 &7216375733296096925
 GameObject:
   m_ObjectHideFlags: 0
