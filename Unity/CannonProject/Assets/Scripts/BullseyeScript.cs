@@ -4,6 +4,7 @@ public class BullseyeScript : MonoBehaviour
 {
     // Variables
     public float timer;
+    public GameObject destroyedBullseye;
 
     private void Update()
     {
@@ -24,6 +25,9 @@ public class BullseyeScript : MonoBehaviour
     void DeadBullseye(bool hit)
     {
         GameManager.Instance.SpawnBullseye(hit, transform.position);
+        if (hit)
+            GameManager.Instance.audioSources[1].Play();
         Destroy(gameObject);
+        Instantiate(destroyedBullseye, transform.position, Quaternion.identity);
     }
 }

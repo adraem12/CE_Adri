@@ -11,14 +11,16 @@ public class CannonScript : MonoBehaviour
     public Material baseMaterial;
     public Material redMaterial;
     public float cannonForce;
-    [HideInInspector] public float currentForce = 0;
-    [HideInInspector] public int maxForce = 100;
     public MeshRenderer[] meshRenderers;
     float materialTimer = 0;
+    [HideInInspector] public float currentForce = 0;
+    [HideInInspector] public int maxForce = 100;
+    [HideInInspector] public bool firstShot;
 
     private void Start()
     {
         cross = GameManager.Instance.cross.transform;
+        firstShot = false;
     }
 
     private void Update()
@@ -44,6 +46,7 @@ public class CannonScript : MonoBehaviour
         materialTimer = 0.15f; // Resetea los valores tras disparar
         foreach (MeshRenderer mr in meshRenderers)
             mr.material = redMaterial;
+        GameManager.Instance.audioSources[0].Play();
     }
 
     public IEnumerator ChargeCannon()

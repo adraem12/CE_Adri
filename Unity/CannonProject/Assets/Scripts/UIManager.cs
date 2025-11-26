@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 public class UIManager : MonoBehaviour
 {
@@ -37,7 +38,10 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         forceSlider.value = cannon.currentForce; // Actualiza la barra de disparo
-        forceText.text = Mathf.Floor(cannon.currentForce).ToString();
+        if (cannon.firstShot)
+            forceText.text = Mathf.Floor(cannon.currentForce).ToString();
+        else
+            forceText.text = "Click to Shoot!";
     }
 
     public void TimeUI(int i)
@@ -54,9 +58,15 @@ public class UIManager : MonoBehaviour
         hitText.text = "Hits: " + GameManager.Instance.hits;
         aimText.text = "Aim : " + (Mathf.Round((float)GameManager.Instance.hits / (float)GameManager.Instance.shots * 10000f) / 100f) + "%";
         if (win)
+        {
             victoryText.text = "You win!";
+            GameManager.Instance.audioSources[2].Play();
+        }
         else
+        {
             victoryText.text = "You lose :(";
+            GameManager.Instance.audioSources[3].Play();
+        }
         endPanel.SetActive(true);
     }
 

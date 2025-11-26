@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int shots = 0;
     public int timeLeft = 0;
     bool hardMode;
+    public AudioSource[] audioSources;
 
     private void OnEnable() // Activa los controles
     {
@@ -34,13 +35,16 @@ public class GameManager : MonoBehaviour
 
     public void ButtonDown() // Cuando se clicka
     {
+        cannon.firstShot = true;
         cannon.StartCoroutine(cannon.ChargeCannon());
+        audioSources[4].Play();
     }
 
     public void ButtonUp() // Cuando se deja de clickar
     {
         cannon.StopAllCoroutines();
         cannon.Shoot();
+        audioSources[4].Stop();
         shots++;
     }
 
@@ -83,11 +87,14 @@ public class GameManager : MonoBehaviour
     {
         cannon.gameObject.SetActive(false);
         cross.gameObject.SetActive(false);
+        cannon.firstShot = false;
         Destroy(FindAnyObjectByType<BullseyeScript>().gameObject);
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
         if (balls.Length > 0 )
             foreach (var ball in balls) 
                 Destroy(ball);
+        foreach (AudioSource aSource in audioSources)
+            aSource.Stop();
         if (hits >= 10 && hits >= shots/2)
             UIManager.Instance.GameUIOff(true);
         else
@@ -103,6 +110,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(Timer(20));
         cannon.gameObject.SetActive(true);
         cross.gameObject.SetActive(true);
+        cannon.currentForce = 0;
+        hits = 0;
+        shots = 0;
         UIManager.Instance.GameUIOn();
         SpawnBullseye(false, new Vector3(0, 10, -20)); // Crea la primera diana
     }
