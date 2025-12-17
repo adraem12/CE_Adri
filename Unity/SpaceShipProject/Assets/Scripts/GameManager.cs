@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public GameObject coinPrefab;
     public Controls controls;
+    public SplineInstancesScript splineInstancesScript;
 
     private void OnEnable() // Activa los controles
     {
@@ -23,11 +26,23 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        List<int> indexedCoins = new();
+        int index;
+        for (int i = 0; i < 15; i++) 
+        {
+            do
+                index = Random.Range(0, 26);
+            while (indexedCoins.Contains(index));
+            indexedCoins.Add(index);
+            Instantiate(coinPrefab, splineInstancesScript.SpawnerList().ToArray()[index].transform.position, Quaternion.identity, splineInstancesScript.transform.GetChild(2));
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            do
+                index = Random.Range(26, 41);
+            while (indexedCoins.Contains(index));
+            indexedCoins.Add(index);
+            Instantiate(coinPrefab, splineInstancesScript.SpawnerList().ToArray()[index].transform.position, Quaternion.identity, splineInstancesScript.transform.GetChild(2));
+        }
     }
 }
