@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public GameObject coinPrefab;
     public Controls controls;
+    public GameObject ship;
     public SplineInstancesScript splineInstancesScript;
+    int coins = 0;
+    int rings = 0; 
 
     private void OnEnable() // Activa los controles
     {
@@ -44,5 +47,15 @@ public class GameManager : MonoBehaviour
             indexedCoins.Add(index);
             Instantiate(coinPrefab, splineInstancesScript.SpawnerList().ToArray()[index].transform.position, Quaternion.identity, splineInstancesScript.transform.GetChild(2));
         }
+    }
+
+    public void AddCoin()
+    {
+        coins++;
+    }
+
+    public void AddRing() 
+    {
+        rings++;
     }
 }
