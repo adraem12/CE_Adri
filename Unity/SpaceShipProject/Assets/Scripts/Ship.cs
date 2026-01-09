@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Ship : MonoBehaviour
 {
+    //Variables
     public float speed = 7f;
     public float rotationforce = 1.75f;
     public float dashMultiplier = 3f;
@@ -29,7 +30,7 @@ public class Ship : MonoBehaviour
 
     void Start()
     {
-        // Llama a la función cuando sucede
+        //Llama a la función cuando sucede
         GameManager.Instance.controls.Player.Move.performed += ReadMoveInput;
         GameManager.Instance.controls.Player.Move.canceled += ReadMoveInput;
         GameManager.Instance.controls.Player.Rotate.performed += ReadRotateInput;
@@ -50,11 +51,11 @@ public class Ship : MonoBehaviour
 
     void ApplyRotation()
     {
+        //Limita y calcula las rotaciones y los balanceos
         float xRotate = 0;
         float yRotate = 0;
         float tilt;
         Vector3 newRot = transform.eulerAngles;
-
         newRot.x = Mathf.Clamp((newRot.x > 180f) ? newRot.x - 360f : newRot.x, -45f, 45f);
         newRot.z = Mathf.Clamp((newRot.z > 180f) ? newRot.z - 360f : newRot.z, -55f, 55f);
         if (rotateVector.x > 0)
@@ -78,20 +79,20 @@ public class Ship : MonoBehaviour
         transform.rotation = Quaternion.Euler(newRot);
     }
 
-    void ReadMoveInput(InputAction.CallbackContext context) // Lee WASD
+    void ReadMoveInput(InputAction.CallbackContext context) //Lee WS
     {
         moveForce = context.ReadValue<Vector2>().y;
         moveForce *= 100 * speed;
     }
 
-    void ReadRotateInput(InputAction.CallbackContext context) // Lee WASD
+    void ReadRotateInput(InputAction.CallbackContext context) //Lee las flechas de dirección
     {
         rotateVector.x = context.ReadValue<Vector2>().x;
         rotateVector.y = context.ReadValue<Vector2>().y;
         rotateVector *= .01f * speed;
     }
 
-    void ReadDashInput(InputAction.CallbackContext context) // Lee WASD
+    void ReadDashInput(InputAction.CallbackContext context) //Lógica del impulso
     {
         if (!dash)
         {

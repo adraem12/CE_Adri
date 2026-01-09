@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CoinScript : MonoBehaviour
 {
+    //Variables
     public float maxDistance = 80;
     public float minDistance = 10;
     Transform shipTransform;
@@ -13,11 +14,12 @@ public class CoinScript : MonoBehaviour
 
     void Start()
     {
-        transform.eulerAngles = new Vector3(0, Random.Range(0f, 360f), 0);      
+        transform.eulerAngles = new Vector3(0, Random.Range(0f, 360f), 0); //Randomiza la rotación inicial
     }
 
     void Update()
     {
+        //Rotación respecto a la distancia con la nave
         float inverseLerp = Mathf.InverseLerp(maxDistance, minDistance, Vector3.Distance(transform.position, shipTransform.position)) * 10;
         transform.Rotate(0, 100f * Time.deltaTime * (inverseLerp + 1), 0);
     }

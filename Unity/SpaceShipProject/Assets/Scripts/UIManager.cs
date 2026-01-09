@@ -3,10 +3,19 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    //Variables
     public static UIManager Instance;
+    [Header("GUI")]
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI ringText;
     public TextMeshProUGUI timeText;
+    [Header("UI")]
+    public TextMeshProUGUI victoryText;
+    public TextMeshProUGUI endCoinsText;
+    public TextMeshProUGUI endRingsText;
+    public TextMeshProUGUI endTimeText;
+    public TextMeshProUGUI pointsText;
+    [Header("GameObjects")]
     public GameObject menuPanel;
     public GameObject endPanel;
     public GameObject gamePanel;
@@ -39,6 +48,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Lógica de los botones del juego
     public void QuitButton()
     {
         Application.Quit();
@@ -51,8 +61,21 @@ public class UIManager : MonoBehaviour
         gamePanel.SetActive(true);
     }
 
-    public void GameOverUI()
+    public void GameOverUI(bool win, int timeLeft, int coins)
     {
+        if (win)
+        {
+            victoryText.text = "You win!";
+            pointsText.text = "Points: " + (timeLeft + (coins * 2)).ToString();
+        }
+        else
+        {
+            victoryText.text = "You lose :(";
+            pointsText.text = "Points: 0";
+        }
+        endCoinsText.text = "Coins: " + coinText.text;
+        endRingsText.text = "Rings: " + ringText.text;
+        endTimeText.text = "Time left: " + timeText.text;
         gamePanel.SetActive(false);
         endPanel.SetActive(true);
     }
@@ -61,5 +84,6 @@ public class UIManager : MonoBehaviour
     {
         endPanel.SetActive(false);
         menuPanel.SetActive(true);
+        GameManager.Instance.ResetGame();
     }
 }
