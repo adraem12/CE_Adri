@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI ringText;
     public TextMeshProUGUI timeText;
+    public Slider dashSlider;
     [Header("UI")]
     public TextMeshProUGUI victoryText;
     public TextMeshProUGUI endCoinsText;
@@ -44,8 +46,17 @@ public class UIManager : MonoBehaviour
                 coinText.text = "0";
                 ringText.text = "0/" + RingManager.Instance.RingList().Count;
                 timeText.text = "00:00";
+                DashSliderUpdate(1, 1, true);
                 break;
         }
+    }
+
+    public void DashSliderUpdate(float maxValue, float currentValue, bool fuel)
+    {
+        //Controla el slider del impulso
+        if (dashSlider.maxValue != maxValue)
+            dashSlider.maxValue = maxValue;
+        dashSlider.value = currentValue;
     }
 
     //Lógica de los botones del juego

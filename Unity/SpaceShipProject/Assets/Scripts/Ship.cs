@@ -111,24 +111,25 @@ public class Ship : MonoBehaviour
         while (currentDashDuration > 0)
         {
             currentDashDuration -= Time.deltaTime;
+            UIManager.Instance.DashSliderUpdate(dashDuration, currentDashDuration, true);
             yield return null;
         }
         StartCoroutine(DashCamFOV(60));
         currentSpeed = speed;
         currentRotationForce = rotationforce;
-        currentDashCooldownTimer = dashCooldownTimer;
+        currentDashCooldownTimer = 0;
         StartCoroutine(DashCooldownCoroutine());
     }
 
     IEnumerator DashCooldownCoroutine()
     {
-        while (currentDashCooldownTimer > 0)
+        while (currentDashCooldownTimer < dashCooldownTimer)
         {
-            currentDashCooldownTimer -= Time.deltaTime;
+            currentDashCooldownTimer += Time.deltaTime;
+            UIManager.Instance.DashSliderUpdate(dashCooldownTimer, currentDashCooldownTimer, false);
             yield return null;
         }
         dash = false;
-        Debug.Log("Dash cooled down");
     }
 
     IEnumerator DashCamFOV(float endFov)
