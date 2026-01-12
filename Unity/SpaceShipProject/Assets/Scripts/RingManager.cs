@@ -53,8 +53,7 @@ public class RingManager : MonoBehaviour
             newSpawner.name = "CoinSpawner" + start + "" + end + "-" + (j - 1);
             spawnerList.Add(newSpawner);
         }
-        ringList[0].GetComponent<MeshRenderer>().enabled = true; //Inicializa el primer anillo
-        ringList[0].GetComponent<MeshCollider>().enabled = true;
+        ringList[0].GetComponent<MeshCollider>().enabled = true; //Inicializa el primer anillo
         ringList[0].GetComponent<MeshRenderer>().material.color = Color.green;
     }
 
@@ -88,7 +87,6 @@ public class RingManager : MonoBehaviour
         currentRing++;
         if (currentRing < ringList.Count)
         {
-            ringList[currentRing].GetComponent<MeshRenderer>().enabled = true;
             ringList[currentRing].GetComponent<MeshCollider>().enabled = true;
             ringList[currentRing].GetComponent<MeshRenderer>().material.color = Color.green;
         }
