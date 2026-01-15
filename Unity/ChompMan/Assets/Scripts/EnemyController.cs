@@ -16,4 +16,10 @@ public class EnemyController : MonoBehaviour
     {
         agent.destination = player.transform.position;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<CharacterController>() != null)
+            GameManager.instance.GameOver();
+    }
 }

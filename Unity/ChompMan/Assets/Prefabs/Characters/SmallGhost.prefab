@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8602139188378013460}
   - component: {fileID: 1047386170057887943}
   - component: {fileID: -5242800991087051943}
+  - component: {fileID: 8675578359436570371}
   m_Layer: 0
   m_Name: SmallGhost
   m_TagString: Untagged
@@ -68,6 +69,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b74d55762eb17145b1645817b33d205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+--- !u!136 &8675578359436570371
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6587159788470737769}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.325
+  m_Height: 0.85
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.425, z: 0}
 --- !u!1001 &4449561831142750334
 PrefabInstance:
   m_ObjectHideFlags: 0

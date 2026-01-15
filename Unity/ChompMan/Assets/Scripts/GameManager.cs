@@ -14,4 +14,10 @@ public class GameManager : MonoBehaviour
         controls = new();
         controls.Enable();
     }
+
+    public void GameOver()
+    {
+        controls.Disable();
+        UIManager.Instance.GameOver();
+    }
 }

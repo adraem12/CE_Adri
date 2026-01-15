@@ -3,9 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
     public GameObject menuPanel;
     public GameObject gamePanel;
     public GameObject endPanel;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -15,6 +21,12 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void GameOver()
+    {
+        gamePanel.SetActive(false);
+        endPanel.SetActive(true);
     }
 
     public void PlayButton()
@@ -27,7 +39,7 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void ExitButton()
+    public void ReplayButton()
     {
         SceneManager.LoadSceneAsync(0);
     }
