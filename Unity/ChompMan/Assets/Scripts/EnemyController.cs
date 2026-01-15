@@ -9,14 +9,11 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("Player");
+        player = GameManager.instance.player;
     }
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > agent.radius + 1f)
-            agent.destination = player.transform.position;
-        else
-            agent.destination = transform.position;
+        agent.destination = player.transform.position;
     }
 }
