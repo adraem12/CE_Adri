@@ -148,10 +148,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1096.9998779296875,
-            "y": 136.00001525878907,
-            "width": 207.99993896484376,
-            "height": 312.00006103515627
+            "x": -711.0,
+            "y": 206.00001525878907,
+            "width": 208.00003051757813,
+            "height": 312.0
         }
     },
     "m_Slots": [
@@ -222,7 +222,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -297,9 +298,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -816.0,
-            "y": 223.0,
-            "width": 99.0,
+            "x": -597.0,
+            "y": 517.0,
+            "width": 99.00006103515625,
             "height": 34.0
         }
     },
@@ -363,7 +364,8 @@
     "m_StageCapability": 2,
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -378,10 +380,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -638.0,
-            "y": 150.99998474121095,
-            "width": 208.0,
-            "height": 302.0
+            "x": -495.99993896484377,
+            "y": 202.0,
+            "width": 207.99990844726563,
+            "height": 301.9999694824219
         }
     },
     "m_Slots": [
@@ -479,6 +481,7 @@
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
     "m_DisableTint": false,
+    "m_Sort3DAs2DCompatible": false,
     "m_AdditionalMotionVectorMode": 0,
     "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
@@ -498,10 +501,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -357.0000305175781,
-            "y": 58.99998092651367,
-            "width": 208.0000457763672,
-            "height": 312.00006103515627
+            "x": -284.0,
+            "y": 201.0,
+            "width": 208.0,
+            "height": 312.0
         }
     },
     "m_Slots": [
@@ -573,7 +576,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -622,7 +626,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -632,6 +637,9 @@
     "m_Guid": {
         "m_GuidSerialized": "961ef913-9140-4495-aba1-083400f1e61d"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "Size",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "Size",
