@@ -95,9 +95,6 @@
         },
         {
             "m_Id": "b1ce2b512fae48e2a5bc7740f7250404"
-        },
-        {
-            "m_Id": "c97890b68505419d80fcdaed5cd4ddf6"
         }
     ],
     "m_GroupDatas": [],
@@ -197,20 +194,6 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "4f72a5e6b073468187fe03af6fd992f4"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "80982baf80674719ae91681c5d14a625"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "c97890b68505419d80fcdaed5cd4ddf6"
                 },
                 "m_SlotId": 0
             }
@@ -907,31 +890,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.BaseColor"
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
-    "m_ObjectId": "44a8d39a933f4afdb5dddb1008fbb045",
-    "m_Id": 0,
-    "m_DisplayName": "vertex",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "vertex",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
 }
 
 {
@@ -1688,31 +1646,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
-    "m_ObjectId": "873f89c1c3474300b44a71fa045925ed",
-    "m_Id": 1,
-    "m_DisplayName": "color",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "color",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "8dd8998f35b446c1adc38f63262ced28",
     "m_Id": 6,
@@ -2308,50 +2241,6 @@
     "m_ShaderOutputName": "Out",
     "m_StageCapability": 3,
     "m_BareResource": false
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.CustomFunctionNode",
-    "m_ObjectId": "c97890b68505419d80fcdaed5cd4ddf6",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Custom Function",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -757.0,
-            "y": 310.9999694824219,
-            "width": 142.0,
-            "height": 77.00006103515625
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "44a8d39a933f4afdb5dddb1008fbb045"
-        },
-        {
-            "m_Id": "873f89c1c3474300b44a71fa045925ed"
-        }
-    ],
-    "synonyms": [
-        "code",
-        "HLSL"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": false,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SourceType": 1,
-    "m_FunctionName": "Enter function name here...",
-    "m_FunctionSource": "",
-    "m_FunctionSourceUsePragmas": true,
-    "m_FunctionBody": "v2f o;\no.color = v.color*UNITY_LIGHTMODEL_AMBIENT;;\nfloat distance = length(mul(UNITY_MATRIX_MV,v.vertex));\nfloat4 affinePos = vertex;\t\t\t\no.uv_MainTex = TRANSFORM_TEX(v.texcoord, _MainTex);\no.uv_MainTex *= distance + (vertex.w*(UNITY_LIGHTMODEL_AMBIENT.a * 8)) / distance / 2;\no.normal = distance + (vertex.w*(UNITY_LIGHTMODEL_AMBIENT.a * 8)) / distance / 2;"
 }
 
 {

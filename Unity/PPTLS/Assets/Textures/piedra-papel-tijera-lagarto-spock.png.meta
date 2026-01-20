@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 8949a5ff37475af41be55670750b837c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 234077510703438322
+    second: piedra-papel-tijera-lagarto-spock_0
+  - first:
+      213: 8230496583041049126
+    second: piedra-papel-tijera-lagarto-spock_1
+  - first:
+      213: 3560906983342186716
+    second: piedra-papel-tijera-lagarto-spock_2
+  - first:
+      213: -8048776027011750078
+    second: piedra-papel-tijera-lagarto-spock_3
+  - first:
+      213: 597878602831684119
+    second: piedra-papel-tijera-lagarto-spock_4
+  - first:
+      213: 4233278256207281077
+    second: piedra-papel-tijera-lagarto-spock_5
+  - first:
+      213: -9116376894443352208
+    second: piedra-papel-tijera-lagarto-spock_6
+  - first:
+      213: -1205706465710331347
+    second: piedra-papel-tijera-lagarto-spock_7
+  - first:
+      213: 1255170055446723505
+    second: piedra-papel-tijera-lagarto-spock_8
+  - first:
+      213: 3958738588617753653
+    second: piedra-papel-tijera-lagarto-spock_9
+  - first:
+      213: 7341204508639274310
+    second: piedra-papel-tijera-lagarto-spock_10
+  - first:
+      213: 3051507130329390311
+    second: piedra-papel-tijera-lagarto-spock_11
+  - first:
+      213: -8224193782466816155
+    second: piedra-papel-tijera-lagarto-spock_12
+  - first:
+      213: 4691766260561929144
+    second: piedra-papel-tijera-lagarto-spock_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_0
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 460
+        width: 219
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f9d26b714c9f3300800000000000000
+      internalID: 234077510703438322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_1
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 513
+        width: 141
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6226a350909983270800000000000000
+      internalID: 8230496583041049126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_2
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 436
+        width: 147
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd0a15ce802ea6130800000000000000
+      internalID: 3560906983342186716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_3
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 516
+        width: 160
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 247e84109d00d4090800000000000000
+      internalID: -8048776027011750078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_4
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 319
+        width: 152
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 712e69ceb671c4800800000000000000
+      internalID: 597878602831684119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_5
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 119
+        width: 479
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bbbe982520afba30800000000000000
+      internalID: 4233278256207281077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_6
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 320
+        width: 129
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f0020e38f1c7180800000000000000
+      internalID: -9116376894443352208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_7
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 130
+        width: 139
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2aa1f78b58744fe0800000000000000
+      internalID: -1205706465710331347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_8
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 164
+        width: 96
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bbfb97e3824b6110800000000000000
+      internalID: 1255170055446723505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_9
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 156
+        width: 101
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5344135a5c340f630800000000000000
+      internalID: 3958738588617753653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_10
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 16
+        width: 162
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 645a0f0fa9231e560800000000000000
+      internalID: 7341204508639274310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_11
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 54
+        width: 154
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ecdad44191295a20800000000000000
+      internalID: 3051507130329390311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_12
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 13
+        width: 211
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 567d618145bcddd80800000000000000
+      internalID: -8224193782466816155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedra-papel-tijera-lagarto-spock_13
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 48
+        width: 123
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b3e4f15e808c1140800000000000000
+      internalID: 4691766260561929144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      piedra-papel-tijera-lagarto-spock_0: 234077510703438322
+      piedra-papel-tijera-lagarto-spock_1: 8230496583041049126
+      piedra-papel-tijera-lagarto-spock_10: 7341204508639274310
+      piedra-papel-tijera-lagarto-spock_11: 3051507130329390311
+      piedra-papel-tijera-lagarto-spock_12: -8224193782466816155
+      piedra-papel-tijera-lagarto-spock_13: 4691766260561929144
+      piedra-papel-tijera-lagarto-spock_2: 3560906983342186716
+      piedra-papel-tijera-lagarto-spock_3: -8048776027011750078
+      piedra-papel-tijera-lagarto-spock_4: 597878602831684119
+      piedra-papel-tijera-lagarto-spock_5: 4233278256207281077
+      piedra-papel-tijera-lagarto-spock_6: -9116376894443352208
+      piedra-papel-tijera-lagarto-spock_7: -1205706465710331347
+      piedra-papel-tijera-lagarto-spock_8: 1255170055446723505
+      piedra-papel-tijera-lagarto-spock_9: 3958738588617753653
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
