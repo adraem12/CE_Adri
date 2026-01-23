@@ -108,6 +108,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.477
     - _GlossyReflections: 1
+    - _LockSize: 0.05
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 0
@@ -132,6 +133,7 @@ Material:
     - _BaseColor: {r: 0.27038085, g: 0.6601244, b: 0.8773585, a: 1}
     - _Color: {r: 0.27038082, g: 0.66012436, b: 0.8773585, a: 1}
     - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Snap: {r: 100, g: 100, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
