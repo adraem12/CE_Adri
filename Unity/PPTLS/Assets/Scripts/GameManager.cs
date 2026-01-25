@@ -36,8 +36,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.instance.SetInfoText("Choose your play...");
             UIManager.instance.ActiveActionButton(true);
-            while (playerCurrentHand == HandType.None)
-                yield return null;
+            yield return new WaitUntil(() => playerCurrentHand != HandType.None);
             UIManager.instance.ActiveActionButton(false);
             RivalTurn(out rivalCurrentHand);
             UIManager.instance.ShowHands(playerCurrentHand, rivalCurrentHand, true);
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour
         else
             UIManager.instance.GameEnd(false);
         StopAllCoroutines();
-        yield return null;
     }
 
     void RivalTurn(out HandType hand)
