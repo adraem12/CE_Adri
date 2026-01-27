@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public static int roundsToWin = 3;
-    public HandType playerCurrentHand = HandType.None;
+    int currentRound;
+    [HideInInspector] public HandType playerCurrentHand = HandType.None;
     HandType rivalCurrentHand = HandType.None;
 
     private void Awake()
@@ -22,7 +23,8 @@ public class GameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        UIManager.instance.SetRoundText(0, 0);
+        currentRound = 1;
+        UIManager.instance.SetRoundText(0, 0, currentRound);
         StartCoroutine(TurnSystem());
     }
 
@@ -52,9 +54,10 @@ public class GameManager : MonoBehaviour
             }
             else
                 UIManager.instance.SetInfoText("It's a tie");
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(3.5f);
+            currentRound++;
             UIManager.instance.ShowHands(playerCurrentHand, rivalCurrentHand, false);
-            UIManager.instance.SetRoundText(playerRounds, rivalRounds);
+            UIManager.instance.SetRoundText(playerRounds, rivalRounds, currentRound);
             playerCurrentHand = HandType.None;
             rivalCurrentHand = HandType.None;
         }

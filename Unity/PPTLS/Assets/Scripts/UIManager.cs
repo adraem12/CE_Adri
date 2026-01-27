@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,8 +6,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public GameObject menuPanel, endPanel, gamePanel, actionsPanel;
-    public TextMeshProUGUI endText, infoText, roundsPText, roundsRText;
+    public GameObject menuPanel, endPanel, gamePanel, actionsPanel, midPanel;
+    public TextMeshProUGUI endText, infoText, roundsPText, roundsRText, currentRoundText, midText;
     public Texture2D[] handImages;
     public RawImage playerImage, rivalImage;
 
@@ -25,10 +26,11 @@ public class UIManager : MonoBehaviour
         actionsPanel.SetActive(active);
     }
 
-    public void SetRoundText(int playerRounds, int rivalRounds)
+    public void SetRoundText(int playerRounds, int rivalRounds, int currentRound)
     {
         roundsPText.text = playerRounds.ToString() + " / " + GameManager.roundsToWin.ToString();
         roundsRText.text = rivalRounds.ToString() + " / " + GameManager.roundsToWin.ToString();
+        currentRoundText.text = "Round " + currentRound;
     }
 
     public void ShowHands(HandType playerHand, HandType rivalHand, bool active)
@@ -57,12 +59,24 @@ public class UIManager : MonoBehaviour
             endText.text = "You lose :(";
     }
 
+    public IEnumerator StartMenuCoroutine()
+    {
+        midText.text = "Welcome to Rock, paper, scissors, lizard, Spok";
+        yield return new WaitForSeconds(3);
+        midText.text = "ROUND 1";
+        yield return new WaitForSeconds(3);
+        GameManager.instance.StartNewGame();
+        gamePanel.SetActive(true);
+        midPanel.SetActive(false);
+        StopCoroutine(StartMenuCoroutine());
+    }
+
     public void PlayButton()
     {
         menuPanel.SetActive(false);
         endPanel.SetActive(false);
-        gamePanel.SetActive(true);
-        GameManager.instance.StartNewGame();
+        midPanel.SetActive(true);
+        StartCoroutine(StartMenuCoroutine());
     }
 
     public void ExitButton()
