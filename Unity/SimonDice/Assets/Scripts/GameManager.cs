@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,15 +34,17 @@ public class GameManager : MonoBehaviour
         if (currentItem >= currentColors.Length)
             foreach (Button button in UIManager.Instance.colorButtons)
                 button.interactable = false;
+        UIManager.Instance.UpdateColorText(i);
     }
 
     public void SettingButton()
     {
-        StartCoroutine(ShowCount());
+        StartCoroutine(ShowSet());
     }
 
-    IEnumerator ShowCount()
+    IEnumerator ShowSet()
     {
+        UIManager.Instance.settingButton.enabled = false;
         foreach (Button button in UIManager.Instance.colorButtons)
             button.interactable = false;
         yield return new WaitForSeconds(0.5f);
@@ -55,15 +56,38 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         foreach (Button button in UIManager.Instance.colorButtons)
             button.interactable = true;
+        StartNewGame();
+        UIManager.Instance.settingButton.enabled = true;
+        StopAllCoroutines();
     }
 
     public void ShowFirstOrLast(bool first)
     {
         if (currentItem != 0 && first)
-            Debug.Log(currentColors.First());
-        else if (!first)
-            Debug.Log(currentColors.Last());
-        else
-            Debug.Log("_");
+            UIManager.Instance.UpdateColorText(currentColors.First());
+        else if (currentItem != 0 && !first)
+            UIManager.Instance.UpdateColorText(currentColors[currentItem - 1]);
+    }
+
+    public void ShowColorCount()
+    {
+        int g = 0, r = 0, b = 0, y = 0;
+        for (int i = 0; i < currentItem; i++)
+            switch (currentColors[i])
+            {
+                case 0:
+                    g++;
+                    break;
+                case 1:
+                    r++;
+                    break;
+                case 2:
+                    b++;
+                    break;
+                case 3:
+                    y++;
+                    break;
+            }
+        Debug.Log("You clicked the green button " + g + " times, the red button " + r + " times, the blue button " + b + " times and the yellow button " + y + " times");
     }
 }
