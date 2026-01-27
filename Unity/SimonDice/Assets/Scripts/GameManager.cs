@@ -1,14 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    List<int> completeList, currentPlayerList;
-    [HideInInspector] public int currentRound;
-    public static int maxRound = 0;
-    bool playing = false;
+    public int[] currentColors;
+    int currentItem;
 
     private void Awake()
     {
@@ -22,50 +22,48 @@ public class GameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        completeList = new List<int>();
-        currentPlayerList = new List<int>();
-        currentRound = 0;
-        StartCoroutine(Game());
-    }
-
-    IEnumerator Game()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(2);
-            AddColorToList();
-            foreach (int i in completeList)
-            {
-                UIManager.Instance.ReproduceColor(i);
-                yield return new WaitForSeconds(1f);
-            }
-            playing = true;
-            UIManager.Instance.ActivateButtons(true);
-            currentPlayerList.Clear();
-            yield return new WaitUntil(() => !playing);
-        }
-    }
-
-    void AddColorToList()
-    {
-        completeList.Add(Random.Range(0, 4));
+        currentColors = new int[20];
+        currentItem = 0;
+        UIManager.Instance.UpdateCountText(currentItem);
     }
 
     public void ButtonCheck(int i)
     {
-        currentPlayerList.Add(i);
-        if (currentPlayerList.IndexOf(i) != completeList.IndexOf(i))
+        currentColors.SetValue(i, currentItem);
+        currentItem++;
+        UIManager.Instance.UpdateCountText(currentItem);
+        if (currentItem >= currentColors.Length)
+            foreach (Button button in UIManager.Instance.colorButtons)
+                button.interactable = false;
+    }
+
+    public void SettingButton()
+    {
+        StartCoroutine(ShowCount());
+    }
+
+    IEnumerator ShowCount()
+    {
+        foreach (Button button in UIManager.Instance.colorButtons)
+            button.interactable = false;
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < currentItem; i++) 
         {
-            StopAllCoroutines();
-            UIManager.Instance.GameEnd();
-            return;
+            UIManager.Instance.colorButtons[currentColors[i]].GetComponent<Animator>().SetTrigger("Activate");
+            yield return new WaitForSeconds(0.5f);
         }
-        if (currentPlayerList.Count == completeList.Count)
-        {
-            playing = false;
-            currentRound++;
-            UIManager.Instance.currentRoundText.text = "Current round: " + currentRound;
-            UIManager.Instance.ActivateButtons(false);
-        }
+        yield return new WaitForSeconds(0.5f);
+        foreach (Button button in UIManager.Instance.colorButtons)
+            button.interactable = true;
+    }
+
+    public void ShowFirstOrLast(bool first)
+    {
+        if (currentItem != 0 && first)
+            Debug.Log(currentColors.First());
+        else if (!first)
+            Debug.Log(currentColors.Last());
+        else
+            Debug.Log("_");
     }
 }
