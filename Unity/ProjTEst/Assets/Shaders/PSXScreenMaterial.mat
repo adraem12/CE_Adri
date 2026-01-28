@@ -41,12 +41,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorBurnForce: 0.15
+    - _ColorBurnForce: 0.2
     - _ColorResolution: 31
     - _DitherOpacity: 0.001
-    - _DitherTiling: 0.5
+    - _DitherTiling: 1.5
     - _Float: 1
     m_Colors:
-    - _Size: {r: 320, g: 240, b: 0, a: 0}
+    - _Size: {r: 640, g: 480, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
