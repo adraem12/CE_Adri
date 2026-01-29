@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PowerPelletScript : MonoBehaviour
+public class DotScript : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<CharacterController>() != null)
         {
-            foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
-                Destroy(enemy.gameObject);
+            GameManager.dotsLeft--;
+            UIManager.Instance.UpdateDotsText();
             Destroy(gameObject);
         }
     }

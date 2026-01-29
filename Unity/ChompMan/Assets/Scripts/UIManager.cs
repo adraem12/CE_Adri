@@ -1,37 +1,45 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    public GameObject menuPanel;
-    public GameObject gamePanel;
-    public GameObject endPanel;
+    public GameObject menuPanel, gamePanel, endPanel;
+    public TextMeshProUGUI enemiesText, dotsText;
+    public GameObject winImage, loseImage;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    void Start()
+    public void UpdateDotsText()
     {
-        
+        dotsText.text = "DOTS LEFT: " + GameManager.dotsLeft;
+        if (GameManager.dotsLeft == 0)
+            GameManager.instance.GameOver(true);
     }
 
-    void Update()
+    public void UpdateEnemiesText()
     {
-        
+        enemiesText.text = "ENEMIES LEFT: " + GameManager.enemiesLeft;
     }
 
-    public void GameOver()
+    public void GameOver(bool win)
     {
         gamePanel.SetActive(false);
         endPanel.SetActive(true);
-    }
-
-    public void PlayButton()
-    {
-
+        if (win) 
+        {
+            winImage.SetActive(true);
+            loseImage.SetActive(false);
+        }
+        else
+        {
+            winImage.SetActive(false);
+            loseImage.SetActive(true);
+        }
     }
 
     public void QuitButton()

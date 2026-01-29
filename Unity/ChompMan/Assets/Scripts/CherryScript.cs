@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class PowerPelletScript : MonoBehaviour
+public class CherryScript : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<CharacterController>() != null)
         {
-            foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
-                Destroy(enemy.gameObject);
+            GameManager.instance.StartCoroutine(GameManager.instance.CherryState());
             Destroy(gameObject);
         }
     }

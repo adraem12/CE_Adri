@@ -14,12 +14,22 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        agent.destination = player.transform.position;
+        if (!GameManager.cherryState)
+            agent.destination = player.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<CharacterController>() != null)
-            GameManager.instance.GameOver();
+        {
+            if (!GameManager.cherryState)
+                GameManager.instance.GameOver(false);
+            else
+            {
+                GameManager.enemiesLeft--;
+                GameManager.enemiesKilled++;
+                Destroy(gameObject);
+            }
+        }
     }
 }
