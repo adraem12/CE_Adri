@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _ColorBurnForce: 0.2
     - _ColorResolution: 31
-    - _DitherOpacity: 0.001
+    - _DitherOpacity: 0.0001
     - _DitherTiling: 1.5
     - _Float: 1
     m_Colors:
