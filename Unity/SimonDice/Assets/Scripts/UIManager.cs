@@ -8,7 +8,6 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public Button[] colorButtons;
     public Button settingButton;
-    public GameObject replayPanel;
     public TextMeshProUGUI countText;
     public TextMeshProUGUI colorText;
 
@@ -39,6 +38,9 @@ public class UIManager : MonoBehaviour
             case 3:
                 StartCoroutine(TextTimer("YELLOW", Color.yellow));
                 break;
+            case -1:
+                StartCoroutine(TextTimer("MAXIMUM COLOURS ACHIEVED", Color.white));
+                break;
         }
     }
 
@@ -50,7 +52,6 @@ public class UIManager : MonoBehaviour
         colorText.text = "";
     }
 
-    // Buttons
     public void ReplayButton()
     {
         GameManager.Instance.StartNewGame();

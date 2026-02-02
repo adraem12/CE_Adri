@@ -28,13 +28,15 @@ public class GameManager : MonoBehaviour
 
     public void ButtonCheck(int i)
     {
-        currentColors.SetValue(i, currentItem);
-        currentItem++;
-        UIManager.Instance.UpdateCountText(currentItem);
-        if (currentItem >= currentColors.Length)
-            foreach (Button button in UIManager.Instance.colorButtons)
-                button.interactable = false;
-        UIManager.Instance.UpdateColorText(i);
+        if (currentItem < currentColors.Length)
+        {
+            currentColors.SetValue(i, currentItem);
+            currentItem++;
+            UIManager.Instance.UpdateCountText(currentItem);
+            UIManager.Instance.UpdateColorText(i);
+        }
+        else
+            UIManager.Instance.UpdateColorText(-1);
     }
 
     public void SettingButton()
