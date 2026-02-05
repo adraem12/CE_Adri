@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     public ARRaycastManager raycastManager;
     public ARPlaneManager planeManager;
     public GameObject[] raycastPrefabs;
-    int prefabCount = 0;
     int currentPrefab = 0;
+    List<GameObject> prefabList = new();
 
     private void Start()
     {
@@ -37,9 +37,11 @@ public class GameManager : MonoBehaviour
             if (firstFinger.phase == TouchPhase.Began)
                 if (raycastManager.Raycast(Input.GetTouch(0).position, raycastHits, TrackableType.PlaneWithinPolygon))
                 {
-                    Instantiate(raycastManager.raycastPrefab, raycastHits[0].pose.position, Quaternion.identity);
-                    prefabCount++;
-                    prefabCountText.text = "Prefabs: " + prefabCount;
+                    GameObject newPrefab = Instantiate(raycastManager.raycastPrefab, raycastHits[0].pose.position, Quaternion.identity);
+                    newPrefab.transform.LookAt(Camera.main.transform.position);
+                    newPrefab.transform.eulerAngles = new Vector3(0, newPrefab.transform.eulerAngles.y, 0);
+                    prefabList.Add(newPrefab);
+                    prefabCountText.text = "Prefabs: " + prefabList.Count;
                 }
             actionText.text = "Current action: " + firstFinger.phase.ToString();
         }
@@ -74,6 +76,9 @@ public class GameManager : MonoBehaviour
 
     public void ResetButton()
     {
-        SceneManager.LoadSceneAsync(0);
+        foreach (GameObject prefab in prefabList)
+            Destroy(prefab);
+        prefabList.Clear();
+        prefabCountText.text = "Prefabs: 0";
     }
 }
