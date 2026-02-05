@@ -1,13 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    public GameObject menuPanel, gamePanel, endPanel;
-    public TextMeshProUGUI enemiesText, dotsText;
-    public GameObject winImage, loseImage;
+    [Header("Panels")]
+    public GameObject menuPanel;
+    public GameObject gamePanel, endPanel;
+    [Header("Texts")]
+    public TextMeshProUGUI enemiesText;
+    public TextMeshProUGUI dotsText, enemiesKilledText, timeText;
+    [Header("Images")]
+    public GameObject winImage;
+    public GameObject loseImage;
 
     private void Awake()
     {
@@ -40,6 +45,10 @@ public class UIManager : MonoBehaviour
             winImage.SetActive(false);
             loseImage.SetActive(true);
         }
+        enemiesKilledText.text = "Enemies killed: " + GameManager.enemiesKilled;
+        int seconds = (int)GameManager.timer % 60;
+        int minutes = (int)GameManager.timer / 60;
+        timeText.text = "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void QuitButton()
@@ -49,6 +58,6 @@ public class UIManager : MonoBehaviour
 
     public void ReplayButton()
     {
-        SceneManager.LoadSceneAsync(0);
+        GameManager.instance.StartNewGame();
     }
 }

@@ -1,34 +1,44 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("SceneObjects")]
     public static GameManager instance;
+    [Header("SceneObjects")]
     public GameObject player;
-    public GameObject enemySpawnParent;
-    public GameObject cherrySpawnParent;
-    public GameObject dotsParent;
-    public GameObject cherry;
-    public GameObject smallGhost;
-    public GameObject bigGhost;
+    public GameObject enemySpawnParent, cherrySpawnParent, dotPositionsParent, dotsParent;
+    [Header("Prefabs")]
+    public GameObject cherryPrefab;
+    public GameObject smallGhost, bigGhost, dotPrefab;
     public Controls controls;
-    public static int enemiesLeft;
-    public static int enemiesKilled;
-    public static int dotsLeft;
+    public static int enemiesLeft, enemiesKilled, dotsLeft = 0;
     public static bool cherryState;
+    public static float timer;
+    Transform[] dotPositions;
 
     private void Awake()
     {
-        enemiesLeft = 0;
-        enemiesKilled = 0;
-        dotsLeft = dotsParent.transform.childCount;
         instance = this;
         controls = new();
+        dotPositions = dotPositionsParent.GetComponentsInChildren<Transform>();
+    }
+
+    public void StartNewGame()
+    {
         controls.Enable();
+        enemiesLeft = 0;
+        enemiesKilled = 0;
+        timer = 0;
+        DotGenerator();
         StartCoroutine(EnemySpawner());
-        Instantiate(cherry, cherrySpawnParent.transform.GetChild(Random.Range(0, cherrySpawnParent.transform.childCount)).position, Quaternion.identity);
+        Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(Random.Range(0, cherrySpawnParent.transform.childCount)).position, Quaternion.identity);
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
     }
 
     public void GameOver(bool win)
@@ -75,5 +85,23 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(EnemySpawner());
         cherryState = false;
+    }
+
+    void DotGenerator()
+    {
+        if (dotsLeft != 0)
+            foreach (DotScript dot in dotsParent.GetComponentsInChildren<DotScript>())
+                Destroy(dot.gameObject);
+        List<int> positions = new();
+        for (int i = 0; i < 100; i++)
+        {
+            int position = Random.Range(0, dotPositions.Length);
+            while (positions.Contains(position))
+                position = Random.Range(0, dotPositions.Length);
+            GameObject newDot = Instantiate(dotPrefab, dotPositions[position].position, Quaternion.identity);
+            newDot.transform.parent = dotsParent.transform;
+            dotsLeft++;
+        }
+        UIManager.Instance.UpdateDotsText();
     }
 }
