@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 7098473601075335495}
   - component: {fileID: 3449033706558318946}
   - component: {fileID: 1546536409907335723}
-  - component: {fileID: 345332107728301754}
   m_Layer: 5
   m_Name: BaseFigure
   m_TagString: Untagged
@@ -213,16 +212,3 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &345332107728301754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5657598101847477035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d396f9e80eff24298ff8a62e995878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SquareScript
-  squareNum: 0
