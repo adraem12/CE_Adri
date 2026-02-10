@@ -18,6 +18,10 @@
 *.blend2
 *.blend2.meta
 
+# Substance painter temporal files.
+*.spp.painter_lock
+*_autosave_0.spp
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
