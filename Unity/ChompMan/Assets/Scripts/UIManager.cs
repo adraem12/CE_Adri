@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     [Header("Panels")]
     public GameObject menuPanel;
-    public GameObject gamePanel, endPanel;
+    public GameObject difficultyPanel, gamePanel, endPanel;
     [Header("Texts")]
     public TextMeshProUGUI enemiesText;
     public TextMeshProUGUI dotsText, enemiesKilledText, timeText;
@@ -56,8 +56,30 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void QuitDifficultyButton()
+    {
+        menuPanel.SetActive(true);
+        difficultyPanel.SetActive(false);
+    }
+
+    public void PlayButton()
+    {
+        menuPanel.SetActive(false);
+        difficultyPanel.SetActive(true);
+    }
+
+    public void EasyButton()
+    {
+        GameManager.instance.StartNewGame(0);
+    }
+
+    public void HardButton()
+    {
+        GameManager.instance.StartNewGame(1);
+    }
+
     public void ReplayButton()
     {
-        GameManager.instance.StartNewGame();
+        GameManager.instance.StartNewGame(-1);
     }
 }

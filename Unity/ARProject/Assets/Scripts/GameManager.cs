@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI planeCountText;
-    public TextMeshProUGUI prefabCountText;
-    public TextMeshProUGUI fingerText;
-    public TextMeshProUGUI actionText;
-    public TextMeshProUGUI prefabButtonText;
-    public TextMeshProUGUI planeButtonText;
+    public TextMeshProUGUI planeCountText, prefabCountText, fingerText, actionText, prefabButtonText, planeButtonText;
     public ARRaycastManager raycastManager;
     public ARPlaneManager planeManager;
     public GameObject[] raycastPrefabs;
