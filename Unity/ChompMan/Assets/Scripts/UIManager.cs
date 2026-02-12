@@ -71,15 +71,21 @@ public class UIManager : MonoBehaviour
     public void EasyButton()
     {
         GameManager.instance.StartNewGame(0);
+        difficultyPanel.SetActive(false);
+        gamePanel.SetActive(true);
     }
 
     public void HardButton()
     {
         GameManager.instance.StartNewGame(1);
+        difficultyPanel.SetActive(false);
+        gamePanel.SetActive(true);
     }
 
     public void ReplayButton()
     {
         GameManager.instance.StartNewGame(-1);
+        endPanel.SetActive(false);
+        gamePanel.SetActive(true);
     }
 }
