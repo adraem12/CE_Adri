@@ -73,6 +73,27 @@ public class GameManager : MonoBehaviour
             }
             squareState[newSquare] = 1;
             playerDice = 0;
+            yield return new WaitForSeconds(1);
+            rivalDice = Dice();
+            DiceChecker(2, out newSquare);
+            aiFigure.localPosition = squareObjects[newSquare].localPosition;
+            yield return new WaitForSeconds(1);
+            while (squareFunction[newSquare] != 0 || squareState[newSquare] != 0)
+            {
+                SpecialSquareChecker(2, newSquare, out int specialSquare);
+                if (specialSquare != newSquare)
+                    newSquare = specialSquare;
+                aiFigure.localPosition = squareObjects[newSquare].localPosition;
+                if (squareState[newSquare] != 0)
+                {
+                    int newDice = squareFunction[newSquare + 1] >= squareFunction[newSquare - 1] ? 1 : -1;
+                    newSquare += newDice;
+                    aiFigure.localPosition = squareObjects[newSquare].localPosition;
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            squareState[newSquare] = 2;
+            rivalDice = 0;
             UIManager.instance.diceButton.interactable = true;
         }
     }
@@ -82,25 +103,41 @@ public class GameManager : MonoBehaviour
         newSquare = 0;
         if (squareFunction[20] == 98)
         {
-            squareFunction[20] = 99;
-            newSquare = playerDice - 1;
+            if (player == 1)
+                newSquare = playerDice - 1;
+            else
+            {
+                squareFunction[20] = 99;
+                newSquare = rivalDice - 1;
+            }
         }
         else
             for (int i = 0; i < squareState.Length; i++)
                 if (squareState[i] == player)
                 {
                     squareState[i] = 0;
-                    if (i + playerDice < squareState.Length)
-                        newSquare = i + playerDice;
+                    if (player == 1)
+                    {
+                        if (i + playerDice < squareState.Length)
+                            newSquare = i + playerDice;
+                        else
+                            newSquare = i - (playerDice - (squareState.Length - i));
+                        break;
+                    }
                     else
-                        newSquare = i - (playerDice - (squareState.Length - i));
-                    break;
+                    {
+                        if (i + rivalDice < squareState.Length)
+                            newSquare = i + rivalDice;
+                        else
+                            newSquare = i - (rivalDice - (squareState.Length - i));
+                        break;
+                    }
                 }
     }
 
     void SpecialSquareChecker(int player, int oldSquare, out int newSquare)
     {
-        newSquare = oldSquare;
+        newSquare = oldSquare + 1;
     }
 
     public static int Dice()
