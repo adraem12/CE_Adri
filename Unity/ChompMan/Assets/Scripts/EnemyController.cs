@@ -16,6 +16,13 @@ public class EnemyController : MonoBehaviour
     {
         if (!GameManager.cherryState)
             agent.destination = player.transform.position;
+        if (agent.isOnOffMeshLink)
+        {
+            if (Vector3.Distance(transform.position, agent.currentOffMeshLinkData.startPos) > Vector3.Distance(transform.position, agent.currentOffMeshLinkData.endPos))
+                transform.position = agent.currentOffMeshLinkData.startPos;
+            else
+                transform.position = agent.currentOffMeshLinkData.endPos;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
