@@ -19,6 +19,7 @@
 *.blend2.meta
 
 # Substance painter temporal files.
+*.assbin
 *.spp.painter_lock
 *_autosave_0.spp
 
