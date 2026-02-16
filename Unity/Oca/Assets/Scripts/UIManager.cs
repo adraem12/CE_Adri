@@ -49,4 +49,9 @@ public class UIManager : MonoBehaviour
         newActionPanel.SetLocalPositionAndRotation(position + Vector3.up, Quaternion.identity);
         newActionPanel.GetComponentInChildren<TextMeshProUGUI>().text = newText;
     }
+
+    public void CollisionButton(int i) //Move when two figures collide
+    {
+        GameManager.instance.playerDice = i;
+    }
 }
