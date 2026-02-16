@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     int turn = 0;
     public int playerDice = 0;
     public int rivalDice = 0;
+    bool gameEnd;
 
     private void Awake()
     {
@@ -48,87 +49,84 @@ public class GameManager : MonoBehaviour
 
     IEnumerator TurnSystem()
     {
-        bool gameEnd = false;
         while (!gameEnd) 
         {
-            turn = 0;
-            UIManager.instance.UpdateTexts(round, turn, playerDice);
+            //Player
+            turn = 1;
+            UIManager.instance.UpdateTexts(round, turn, 0);
+            UIManager.instance.diceButton.interactable = true;
             yield return new WaitUntil(() => playerDice != 0);
             yield return new WaitForSeconds(0.5f);
-            DiceChecker(1, out int startSquare, out int newSquare);
-            squareState[startSquare] = 0;
-            yield return FigureMove(playerFigure, startSquare, newSquare);
+            yield return Turn(1);
             yield return new WaitForSeconds(0.5f);
-            while (squareFunction[newSquare] != 0 || squareState[newSquare] != 0)
+            //AI
+            turn = 2;
+            yield return new WaitForSeconds(0.5f);
+            yield return Turn(2);
+            round++;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator Turn(int player)
+    {
+        turn = player;
+        RectTransform figure;
+        UIManager.instance.UpdateTexts(round, turn, 0);
+        if (player == 2) //Set player variables
+        {
+            rivalDice = Dice();
+            figure = aiFigure;
+        }
+        else
+            figure = playerFigure;
+        DiceChecker(player, out int startSquare, out int newSquare);
+        if (player == 2)
+            UIManager.instance.SpawnActionPanel(rivalDice.ToString(), squareObjects[startSquare].localPosition);
+        squareState[startSquare] = 0;
+        yield return FigureMove(figure, startSquare, newSquare);
+        while (squareFunction[newSquare] != 0 || squareState[newSquare] != 0) //Check for special or full square
+        {
+            SpecialSquareChecker(player, newSquare, out int specialSquare);
+            if (specialSquare == 99) //Win square
             {
-                SpecialSquareChecker(1, newSquare, out int specialSquare);
-                if (specialSquare == 99)
-                {
-                    gameEnd = true;
-                    yield break;
-                }
-                if (specialSquare != newSquare)
-                {
-                    squareState[newSquare] = 0;
-                    yield return FigureMove(playerFigure, newSquare, specialSquare);
-                    newSquare = specialSquare;
-                }
-                if (squareState[newSquare] != 0)
+                gameEnd = true;
+                yield break;
+            }
+            if (specialSquare != newSquare) //Action if special square
+            {
+                squareState[newSquare] = 0;
+                yield return FigureMove(figure, newSquare, specialSquare);
+                newSquare = specialSquare;
+            }
+            if (squareState[newSquare] != 0) //Full square
+            {
+                int newDice;
+                if (player == 1)
                 {
                     playerDice = 0;
                     UIManager.instance.MinusPlusButtonsEnabled(true);
                     yield return new WaitUntil(() => playerDice != 0);
-                    startSquare = newSquare;
-                    newSquare += playerDice;
                     UIManager.instance.MinusPlusButtonsEnabled(false);
-                    yield return FigureMove(playerFigure, startSquare, newSquare);
-                    yield return new WaitForSeconds(0.5f);
+                    newDice = playerDice;
                 }
+                else
+                    newDice = squareFunction[newSquare + 1] >= squareFunction[newSquare - 1] ? 1 : -1;
+                startSquare = newSquare;
+                newSquare += newDice;
+                yield return FigureMove(figure, startSquare, newSquare);
             }
-            squareState[newSquare] = 1;
-            playerDice = 0;
-            yield return new WaitForSeconds(0.5f);
-            //AI
-            turn = 1;
-            rivalDice = Dice();
-            UIManager.instance.UpdateTexts(round, turn, rivalDice);
-            DiceChecker(2, out startSquare, out newSquare);
-            squareState[startSquare] = 0;
-            yield return FigureMove(aiFigure, startSquare, newSquare);
-            yield return new WaitForSeconds(0.5f);
-            while (squareFunction[newSquare] != 0 || squareState[newSquare] != 0)
-            {
-                SpecialSquareChecker(2, newSquare, out int specialSquare);
-                if (specialSquare == 99)
-                {
-                    gameEnd = true;
-                    yield break;
-                }
-                if (specialSquare != newSquare)
-                {
-                    squareState[newSquare] = 0;
-                    yield return FigureMove(aiFigure, newSquare, specialSquare);
-                    newSquare = specialSquare;
-                }
-                if (squareState[newSquare] != 0)
-                {
-                    int newDice = squareFunction[newSquare + 1] >= squareFunction[newSquare - 1] ? 1 : -1;
-                    startSquare = newSquare;
-                    newSquare += newDice;
-                    yield return FigureMove(aiFigure, startSquare, newSquare);
-                    yield return new WaitForSeconds(0.5f);
-                }
-            }
-            squareState[newSquare] = 2;
-            rivalDice = 0;
-            round++;
-            UIManager.instance.diceButton.interactable = true;
         }
+        squareState[newSquare] = player;
+        if (player == 1) //Reset dices
+            playerDice = 0;
+        else
+            rivalDice = 0;
     }
 
-    IEnumerator FigureMove(RectTransform figure, int startSquare, int endSquare)
+    IEnumerator FigureMove(RectTransform figure, int startSquare, int endSquare) //Move figure along path
     {
-        List<Vector3> positions = new() { figure.localPosition };
+        List<Vector3> positions = new() { figure.localPosition }; //Path creation
         if (startSquare == 0)
             positions.Add(squareObjects[0].localPosition);
         if (startSquare < endSquare)
@@ -150,9 +148,10 @@ public class GameManager : MonoBehaviour
             }
             yield return null;
         }
+        yield return new WaitForSeconds(0.5f);
     }
 
-    void DiceChecker(int player, out int startSquare, out int endSquare)
+    void DiceChecker(int player, out int startSquare, out int endSquare) //Check correct end position
     {
         endSquare = 0;
         startSquare = 0;
@@ -187,20 +186,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SpecialSquareChecker(int player, int oldSquare, out int newSquare)
+    void SpecialSquareChecker(int player, int oldSquare, out int newSquare) //Check for special square and effect
     {
         newSquare = oldSquare;
         if (squareFunction[oldSquare] != 0)
         {
             squareState[oldSquare] = 0;
-            if (squareFunction[oldSquare] == 1)
+            if (squareFunction[oldSquare] == 1) //Teleport
             {
                 if (oldSquare == 0)
                     newSquare = 6;
                 else if (oldSquare == 5)
                     newSquare = 12;
+                UIManager.instance.SpawnActionPanel("Move to square " + (newSquare + 1), squareObjects[oldSquare].localPosition);
             }
-            else if (squareFunction[oldSquare] == 2)
+            else if (squareFunction[oldSquare] == 2) //New dice
             {
                 int dice;
                 dice = Dice();
@@ -210,18 +210,25 @@ public class GameManager : MonoBehaviour
                     rivalDice = dice;
                 squareState[oldSquare] = player;
                 DiceChecker(player, out oldSquare, out newSquare);
-                UIManager.instance.UpdateTexts(round, turn, dice);
+                if (player == 1)
+                    UIManager.instance.UpdateTexts(round, turn, dice);
+                else
+                    UIManager.instance.SpawnActionPanel(rivalDice.ToString(), squareObjects[oldSquare].localPosition);
+                UIManager.instance.SpawnActionPanel("Throw dice again", squareObjects[oldSquare].localPosition);
                 squareFunction[oldSquare] = 0;
                 squareObjects[oldSquare].GetComponent<RawImage>().color = Color.white;
             }
-            else if (squareFunction[oldSquare] == -1)
+            else if (squareFunction[oldSquare] == -1) //-3 squares
+            {
                 newSquare = oldSquare - 3;
-            else if (squareFunction[oldSquare] == 99)
+                UIManager.instance.SpawnActionPanel("-3 squares", squareObjects[oldSquare].localPosition);
+            }
+            else if (squareFunction[oldSquare] == 99) //Win
                 newSquare = 99;
         }
     }
 
-    public static int Dice()
+    public static int Dice() //Dice throw
     {
         return Random.Range(1, 7);
     }

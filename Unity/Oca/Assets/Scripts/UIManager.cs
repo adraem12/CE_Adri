@@ -14,34 +14,39 @@ public class UIManager : MonoBehaviour
         instance = this;
     }
 
-    public void UpdateTexts(int round, int turn, int dice)
+    public void UpdateTexts(int round, int turn, int dice) //Update canvas' info
     {
         roundText.text = "Round " + round;
-        if (turn == 0) turnText.text = "Player Turn";
-        else turnText.text = "AI Turn";
-        diceText.text = dice.ToString();
+        if (turn == 1) 
+            turnText.text = "Player Turn";
+        else 
+            turnText.text = "AI Turn";
+        if (dice != 0)
+        {
+            diceText.text = dice.ToString();
+            diceButton.GetComponent<Animator>().SetTrigger("dice");
+        }
     }
 
-    public void MinusPlusButtonsEnabled(bool enabled)
+    public void MinusPlusButtonsEnabled(bool enabled) //Control minus and plus buttons
     {
         minusButton.gameObject.SetActive(enabled);
         plusButton.gameObject.SetActive(enabled);
     }
 
-    public void DiceButton()
+    public void DiceButton() //Dice button behaviour
     {
         int a = GameManager.Dice();
         GameManager.instance.playerDice = a;
         diceText.text = a.ToString();
+        diceButton.GetComponent<Animator>().SetTrigger("dice");
     }
 
-    public void CollisionButton(int i)
+    public void SpawnActionPanel(string newText, Vector3 position) //Spawn and position a new action panel
     {
-        GameManager.instance.playerDice = i;
-    }
-
-    public void SpawnActionPanel(string newText)
-    {
-
+        Debug.Log(newText);
+        RectTransform newActionPanel = Instantiate(actionPanel, GameManager.instance.squareObjects[0].parent).GetComponent<RectTransform>();
+        newActionPanel.SetLocalPositionAndRotation(position + Vector3.up, Quaternion.identity);
+        newActionPanel.GetComponentInChildren<TextMeshProUGUI>().text = newText;
     }
 }

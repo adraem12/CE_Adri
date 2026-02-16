@@ -7,6 +7,7 @@ public class SquareScript : MonoBehaviour
 
     private void Awake()
     {
+        //Square info
         squareNum = int.Parse(Regex.Replace(gameObject.name, "[a-zA-Z]", ""));
     }
 }
