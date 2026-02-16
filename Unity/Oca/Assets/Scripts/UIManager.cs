@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
     public TextMeshProUGUI roundText, turnText, diceText;
     public Button diceButton, minusButton, plusButton;
+    public GameObject actionPanel;
 
     private void Awake()
     {
@@ -37,5 +38,10 @@ public class UIManager : MonoBehaviour
     public void CollisionButton(int i)
     {
         GameManager.instance.playerDice = i;
+    }
+
+    public void SpawnActionPanel(string newText)
+    {
+
     }
 }
