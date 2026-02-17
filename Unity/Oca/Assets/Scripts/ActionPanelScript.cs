@@ -13,7 +13,7 @@ public class ActionPanelScript : MonoBehaviour
     private void Update()
     {
         //Movement
-        rectTransform.localPosition += Vector3.up * 0.1f;
+        rectTransform.localPosition += Vector3.up * 0.075f;
         //Destruction
         time -= Time.deltaTime;
         if (time < 0)

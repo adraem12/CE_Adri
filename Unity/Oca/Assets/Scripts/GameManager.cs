@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    [Header("Arrays")]
     public int[] squareState;
     int[] squareFunction;
     public RectTransform[] squareObjects;
-    public RectTransform playerFigure, aiFigure;
-    int round = 1;
-    int turn = 0;
-    public int playerDice = 0;
-    public int rivalDice = 0;
+    [Header("Prefabs")]
+    public RectTransform playerFigure;
+    public RectTransform aiFigure;
+    public float waitTime;
+    //Private
+    int round = 1, turn = 0;
+    [HideInInspector] public int playerDice = 0, rivalDice = 0;
     bool gameEnd;
 
     private void Awake()
@@ -56,16 +60,22 @@ public class GameManager : MonoBehaviour
             UIManager.instance.UpdateTexts(round, turn, 0);
             UIManager.instance.diceButton.interactable = true;
             yield return new WaitUntil(() => playerDice != 0);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(waitTime);
             yield return Turn(1);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(waitTime);
+            if (gameEnd)
+                yield break;
             //AI
             turn = 2;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(waitTime);
             yield return Turn(2);
             round++;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(waitTime);
         }
+        if (squareState.Last() == 1)
+            UIManager.instance.GameEnd(true);
+        else
+            UIManager.instance.GameEnd(false);
     }
 
     IEnumerator Turn(int player)
@@ -129,17 +139,19 @@ public class GameManager : MonoBehaviour
         List<Vector3> positions = new() { figure.localPosition }; //Path creation
         if (startSquare == 0)
             positions.Add(squareObjects[0].localPosition);
+        int i;
         if (startSquare < endSquare)
-            for (int i = startSquare + 1; i <= endSquare; i++) 
+            for (i = startSquare + 1; i <= endSquare; i++) 
                 positions.Add(squareObjects[i].localPosition);
         else
-            for (int i = startSquare - 1; i >= endSquare; i--)
+            for (i = startSquare - 1; i >= endSquare; i--)
                 positions.Add(squareObjects[i].localPosition);
+        squareObjects[endSquare].Find("Marker").gameObject.SetActive(true);
         int currentObjective = 1;
         float percentage = 0;
         while (Vector3.Distance(figure.localPosition, squareObjects[endSquare].localPosition) > 0.1f)
         {
-            percentage += Time.deltaTime * 2f;
+            percentage += Time.deltaTime * 1.25f;
             figure.localPosition = Vector3.Slerp(positions[currentObjective - 1], positions[currentObjective], percentage);
             if (Vector3.Distance(figure.localPosition, positions[currentObjective]) < 0.05f)
             {
@@ -148,7 +160,8 @@ public class GameManager : MonoBehaviour
             }
             yield return null;
         }
-        yield return new WaitForSeconds(0.5f);
+        squareObjects[endSquare].Find("Marker").gameObject.SetActive(false);
+        yield return new WaitForSeconds(waitTime);
     }
 
     void DiceChecker(int player, out int startSquare, out int endSquare) //Check correct end position

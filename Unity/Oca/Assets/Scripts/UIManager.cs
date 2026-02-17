@@ -5,16 +5,20 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public TextMeshProUGUI roundText, turnText, diceText;
-    public Button diceButton, minusButton, plusButton;
-    public GameObject actionPanel;
+    [Header("Texts")]
+    public TextMeshProUGUI roundText;
+    public TextMeshProUGUI turnText, diceText;
+    [Header("Prefabs")]
+    public Button diceButton;
+    public Button minusButton, plusButton;
+    public GameObject actionPanel, winPanel;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void UpdateTexts(int round, int turn, int dice) //Update canvas' info
+    public void UpdateTexts(int round, int turn, int dice) //Update canvas info
     {
         roundText.text = "Round " + round;
         if (turn == 1) 
@@ -44,7 +48,6 @@ public class UIManager : MonoBehaviour
 
     public void SpawnActionPanel(string newText, Vector3 position) //Spawn and position a new action panel
     {
-        Debug.Log(newText);
         RectTransform newActionPanel = Instantiate(actionPanel, GameManager.instance.squareObjects[0].parent).GetComponent<RectTransform>();
         newActionPanel.SetLocalPositionAndRotation(position + Vector3.up, Quaternion.identity);
         newActionPanel.GetComponentInChildren<TextMeshProUGUI>().text = newText;
@@ -53,5 +56,14 @@ public class UIManager : MonoBehaviour
     public void CollisionButton(int i) //Move when two figures collide
     {
         GameManager.instance.playerDice = i;
+    }
+
+    public void GameEnd(bool playerWin) //Spawn end panel
+    {
+        winPanel.SetActive(true);
+        if (playerWin)
+            winPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You win!";
+        else
+            winPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You lose :(";
     }
 }
