@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,7 +45,8 @@ public class GameManager : MonoBehaviour
         SetDifficulty(difficulty);
         DotGenerator(100);
         StartCoroutine(EnemySpawner());
-        Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(Random.Range(0, cherrySpawnParent.transform.childCount)).position, Quaternion.identity);
+        ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, 100, out int index);
+        Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(index).position, Quaternion.identity);
     }
 
     private void Update()
@@ -62,15 +65,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator EnemySpawner()
     {
-        int spawnSmall, spawnBig;
         while (true) 
         { 
-            spawnSmall = Random.Range(0, enemySpawnParent.transform.childCount);
-            spawnBig = spawnSmall;
-            while (spawnBig == spawnSmall)
-                spawnBig = Random.Range(0, enemySpawnParent.transform.childCount);
-            Instantiate(smallGhost, enemySpawnParent.transform.GetChild(spawnSmall).position, Quaternion.identity);
-            Instantiate(bigGhost, enemySpawnParent.transform.GetChild(spawnBig).position, Quaternion.identity);
+            ChooseSpawn(enemySpawnParent.transform, enemySpawnDistance, enemySpawnDistance * 2, out int smallIndex);
+            ChooseSpawn(enemySpawnParent.transform, enemySpawnDistance, enemySpawnDistance * 2, out int bigIndex);
+            bigIndex = smallIndex;
+            while (bigIndex == smallIndex)
+                bigIndex = Random.Range(0, enemySpawnParent.transform.childCount);
+            Instantiate(smallGhost, enemySpawnParent.transform.GetChild(smallIndex).position, Quaternion.identity);
+            Instantiate(bigGhost, enemySpawnParent.transform.GetChild(bigIndex).position, Quaternion.identity);
             enemiesLeft += 2;
             UIManager.Instance.UpdateEnemiesText();
             yield return new WaitForSeconds(enemySpawnTime);
@@ -95,6 +98,9 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(EnemySpawner());
         cherryState = false;
+        yield return new WaitForSeconds(objectSpawnTime);
+        ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, 100, out int index);
+        Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(index).position, Quaternion.identity);
     }
 
     void DotGenerator(int quantity)
@@ -136,6 +142,17 @@ public class GameManager : MonoBehaviour
             enemySpawnTime = (int)difficultyStats.enemySpawnTime.y;
             objectSpawnDistance = (int)difficultyStats.objectSpawnDistance.y;
             enemySpawnDistance = (int)difficultyStats.enemySpawnDistance.y;
+        }
+    }
+
+    void ChooseSpawn(Transform parent, int minDistance, int maxDistance, out int index)
+    {
+        float distance = -1;
+        index = 0;
+        while (distance < minDistance || distance > maxDistance)
+        {
+            index = Random.Range(0, cherrySpawnParent.transform.childCount);
+            distance = Vector3.Distance(parent.GetChild(index).position, player.transform.position);
         }
     }
 }
