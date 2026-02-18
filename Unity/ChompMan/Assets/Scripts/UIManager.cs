@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -56,6 +57,11 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void ReturnToMenuButton()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void QuitDifficultyButton()
     {
         menuPanel.SetActive(true);
@@ -68,16 +74,9 @@ public class UIManager : MonoBehaviour
         difficultyPanel.SetActive(true);
     }
 
-    public void EasyButton()
+    public void DifficultyButton (int difficulty)
     {
-        GameManager.instance.StartNewGame(0);
-        difficultyPanel.SetActive(false);
-        gamePanel.SetActive(true);
-    }
-
-    public void HardButton()
-    {
-        GameManager.instance.StartNewGame(1);
+        GameManager.instance.StartNewGame(difficulty);
         difficultyPanel.SetActive(false);
         gamePanel.SetActive(true);
     }

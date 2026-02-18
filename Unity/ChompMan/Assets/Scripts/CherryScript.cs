@@ -6,6 +6,7 @@ public class CherryScript : MonoBehaviour
     {
         if (other.GetComponent<CharacterController>() != null)
         {
+            GameManager.instance.StopAllCoroutines();
             GameManager.instance.StartCoroutine(GameManager.instance.CherryState());
             Destroy(gameObject);
         }

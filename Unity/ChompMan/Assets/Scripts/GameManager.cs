@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +17,7 @@ public class GameManager : MonoBehaviour
     DifficultyStats difficultyStats;
     int objectSpawnTime, enemySpawnTime;
     int objectSpawnDistance, enemySpawnDistance;
+    int dotQuantity;
     public static int enemiesLeft, enemiesKilled, dotsLeft = 0;
     public static bool cherryState;
     public static float timer;
@@ -42,10 +42,12 @@ public class GameManager : MonoBehaviour
             difficulty = lastDifficulty;
         else
             lastDifficulty = difficulty;
+        foreach (CherryScript cherry in FindObjectsByType<CherryScript>(FindObjectsSortMode.None)) 
+            Destroy(cherry.gameObject);
         SetDifficulty(difficulty);
-        DotGenerator(100);
+        DotGenerator();
         StartCoroutine(EnemySpawner());
-        ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, 100, out int index);
+        ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, out int index);
         Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(index).position, Quaternion.identity);
     }
 
@@ -65,13 +67,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator EnemySpawner()
     {
-        while (true) 
-        { 
-            ChooseSpawn(enemySpawnParent.transform, enemySpawnDistance, enemySpawnDistance * 2, out int smallIndex);
-            ChooseSpawn(enemySpawnParent.transform, enemySpawnDistance, enemySpawnDistance * 2, out int bigIndex);
-            bigIndex = smallIndex;
+        while (!cherryState) 
+        {
+            ChooseSpawn(enemySpawnParent.transform, enemySpawnDistance, out int smallIndex);
+            int bigIndex = smallIndex;
             while (bigIndex == smallIndex)
-                bigIndex = Random.Range(0, enemySpawnParent.transform.childCount);
+                ChooseSpawn(enemySpawnParent.transform, enemySpawnDistance, out bigIndex);
             Instantiate(smallGhost, enemySpawnParent.transform.GetChild(smallIndex).position, Quaternion.identity);
             Instantiate(bigGhost, enemySpawnParent.transform.GetChild(bigIndex).position, Quaternion.identity);
             enemiesLeft += 2;
@@ -82,7 +83,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator CherryState()
     {
-        StopCoroutine(EnemySpawner());
         cherryState = true;
         foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
         {
@@ -90,26 +90,35 @@ public class GameManager : MonoBehaviour
             enemy.GetComponent<NavMeshAgent>().speed *= 0.5f;
             enemy.GetComponent<NavMeshAgent>().SetDestination(Vector3.zero);
         }
-        yield return new WaitForSeconds(objectSpawnTime);
+        yield return new WaitForSeconds(enemySpawnTime);
+        for (int i = 0; i <= 8; i++)
+        {
+            foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
+                enemy.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
+                enemy.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+            yield return new WaitForSeconds(0.1f);
+        }
         foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
         {
             enemy.GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.white;
             enemy.GetComponent<NavMeshAgent>().speed *= 2f;
         }
-        StartCoroutine(EnemySpawner());
         cherryState = false;
+        StartCoroutine(EnemySpawner());
         yield return new WaitForSeconds(objectSpawnTime);
-        ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, 100, out int index);
+        ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, out int index);
         Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(index).position, Quaternion.identity);
     }
 
-    void DotGenerator(int quantity)
+    void DotGenerator()
     {
         if (dotsLeft != 0)
             foreach (DotScript dot in dotsParent.GetComponentsInChildren<DotScript>())
                 Destroy(dot.gameObject);
         List<int> positions = new();
-        for (int i = 0; i < quantity; i++)
+        for (int i = 0; i < dotQuantity; i++)
         {
             int position = Random.Range(0, dotPositions.Length);
             while (positions.Contains(position))
@@ -132,6 +141,7 @@ public class GameManager : MonoBehaviour
             enemySpawnTime = (int)difficultyStats.enemySpawnTime.x;
             objectSpawnDistance = (int)difficultyStats.objectSpawnDistance.x;
             enemySpawnDistance = (int)difficultyStats.enemySpawnDistance.x;
+            dotQuantity = (int)difficultyStats.dotQuantity.x;
         }
         else
         {
@@ -142,16 +152,17 @@ public class GameManager : MonoBehaviour
             enemySpawnTime = (int)difficultyStats.enemySpawnTime.y;
             objectSpawnDistance = (int)difficultyStats.objectSpawnDistance.y;
             enemySpawnDistance = (int)difficultyStats.enemySpawnDistance.y;
+            dotQuantity = (int)difficultyStats.dotQuantity.y;
         }
     }
 
-    void ChooseSpawn(Transform parent, int minDistance, int maxDistance, out int index)
+    void ChooseSpawn(Transform parent, int minDistance, out int index)
     {
         float distance = -1;
         index = 0;
-        while (distance < minDistance || distance > maxDistance)
+        while (distance < minDistance)
         {
-            index = Random.Range(0, cherrySpawnParent.transform.childCount);
+            index = Random.Range(0, parent.childCount);
             distance = Vector3.Distance(parent.GetChild(index).position, player.transform.position);
         }
     }

@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
     {
         if (!GameManager.cherryState)
             agent.destination = player.transform.position;
-        if (agent.isOnOffMeshLink)
+        if (agent.isOnOffMeshLink && agent.currentOffMeshLinkData.startPos.x != 0)
         {
             if (Vector3.Distance(transform.position, agent.currentOffMeshLinkData.startPos) > Vector3.Distance(transform.position, agent.currentOffMeshLinkData.endPos))
                 transform.position = agent.currentOffMeshLinkData.startPos;
