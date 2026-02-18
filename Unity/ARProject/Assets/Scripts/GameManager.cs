@@ -54,16 +54,16 @@ public class GameManager : MonoBehaviour
     {
         if (planeManager.enabled)
         {
+            planeManager.enabled = false;
             foreach (ARPlane plane in planeManager.trackables)
                 plane.gameObject.SetActive(false);
-            planeManager.enabled = false;
             planeButtonText.text = "Enable planes";
         }
         else
         {
+            planeManager.enabled = true;
             foreach (ARPlane plane in planeManager.trackables)
                 plane.gameObject.SetActive(true);
-            planeManager.enabled = true;
             planeButtonText.text = "Disable planes";
         }
     }
