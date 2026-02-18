@@ -14,9 +14,9 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.cherryState)
+        if (!GameManager.cherryState) //Normal behaviour
             agent.destination = player.transform.position;
-        if (agent.isOnOffMeshLink && agent.currentOffMeshLinkData.startPos.x != 0)
+        if (agent.isOnOffMeshLink && agent.currentOffMeshLinkData.startPos.x != 0) //TP behaviour
         {
             if (Vector3.Distance(transform.position, agent.currentOffMeshLinkData.startPos) > Vector3.Distance(transform.position, agent.currentOffMeshLinkData.endPos))
                 transform.position = agent.currentOffMeshLinkData.startPos;
@@ -29,13 +29,15 @@ public class EnemyController : MonoBehaviour
     {
         if (other.GetComponent<CharacterController>() != null)
         {
-            if (!GameManager.cherryState)
+            if (!GameManager.cherryState) //Kill player
                 GameManager.instance.GameOver(false);
-            else
+            else //Get killed by player
             {
                 GameManager.enemiesLeft--;
                 GameManager.enemiesKilled++;
+                UIManager.Instance.UpdateEnemiesText();
                 Destroy(gameObject);
+                SoundManager.instance.SetEffects(1);
             }
         }
     }

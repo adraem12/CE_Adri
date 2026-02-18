@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
         enemiesText.text = "ENEMIES LEFT: " + GameManager.enemiesLeft;
     }
 
-    public void GameOver(bool win)
+    public void GameOver(bool win) //Controls end menu
     {
         gamePanel.SetActive(false);
         endPanel.SetActive(true);
@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour
         timeText.text = "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    //Button behaviours
     public void QuitButton()
     {
         Application.Quit();

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DifficultyStats : MonoBehaviour
 {
+    //Define difficulty relative variables
     public Vector2 playerSpeed;
     public Vector2 smallSpeed;
     public Vector2 bigSpeed;

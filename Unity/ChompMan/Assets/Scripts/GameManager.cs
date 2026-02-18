@@ -30,10 +30,12 @@ public class GameManager : MonoBehaviour
         controls = new();
         difficultyStats = GetComponent<DifficultyStats>();
         dotPositions = dotPositionsParent.GetComponentsInChildren<Transform>();
+        SoundManager.instance.SetMusic(0);
     }
 
-    public void StartNewGame(int difficulty)
+    public void StartNewGame(int difficulty) //Set new game variables
     {
+        SoundManager.instance.SetMusic(1);
         controls.Enable();
         enemiesLeft = 0;
         enemiesKilled = 0;
@@ -56,8 +58,9 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
     }
 
-    public void GameOver(bool win)
+    public void GameOver(bool win) //End game
     {
+        SoundManager.instance.SetMusic(3);
         StopAllCoroutines();
         controls.Disable();
         UIManager.Instance.GameOver(win);
@@ -65,7 +68,7 @@ public class GameManager : MonoBehaviour
             Destroy(enemy.gameObject);
     }
 
-    IEnumerator EnemySpawner()
+    IEnumerator EnemySpawner() //Control enemy spawns
     {
         while (!cherryState) 
         {
@@ -81,8 +84,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator CherryState()
+    public IEnumerator CherryState() //Control cherry behaviour
     {
+        SoundManager.instance.SetMusic(2);
         cherryState = true;
         foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
         {
@@ -91,7 +95,7 @@ public class GameManager : MonoBehaviour
             enemy.GetComponent<NavMeshAgent>().SetDestination(Vector3.zero);
         }
         yield return new WaitForSeconds(enemySpawnTime);
-        for (int i = 0; i <= 8; i++)
+        for (int i = 0; i <= 8; i++) //Blink
         {
             foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
                 enemy.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
@@ -106,13 +110,14 @@ public class GameManager : MonoBehaviour
             enemy.GetComponent<NavMeshAgent>().speed *= 2f;
         }
         cherryState = false;
+        SoundManager.instance.SetMusic(1);
         StartCoroutine(EnemySpawner());
         yield return new WaitForSeconds(objectSpawnTime);
         ChooseSpawn(cherrySpawnParent.transform, objectSpawnDistance, out int index);
         Instantiate(cherryPrefab, cherrySpawnParent.transform.GetChild(index).position, Quaternion.identity);
     }
 
-    void DotGenerator()
+    void DotGenerator() //Spawn dots around the scenery
     {
         if (dotsLeft != 0)
             foreach (DotScript dot in dotsParent.GetComponentsInChildren<DotScript>())
@@ -130,11 +135,11 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateDotsText();
     }
 
-    void SetDifficulty(int difficulty)
+    void SetDifficulty(int difficulty) //Set difficulty variables
     {
         if (difficulty == 0)
         {
-            player.GetComponent<NavPlayer>().speed = difficultyStats.playerSpeed.x;
+            player.GetComponent<PlayerScript>().speed = difficultyStats.playerSpeed.x;
             smallGhost.GetComponent<NavMeshAgent>().speed = difficultyStats.smallSpeed.x;
             bigGhost.GetComponent<NavMeshAgent>().speed = difficultyStats.bigSpeed.x;
             objectSpawnTime = (int)difficultyStats.objectSpawnTime.x;
@@ -145,7 +150,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            player.GetComponent<NavPlayer>().speed = difficultyStats.playerSpeed.y;
+            player.GetComponent<PlayerScript>().speed = difficultyStats.playerSpeed.y;
             smallGhost.GetComponent<NavMeshAgent>().speed = difficultyStats.smallSpeed.y;
             bigGhost.GetComponent<NavMeshAgent>().speed = difficultyStats.bigSpeed.y;
             objectSpawnTime = (int)difficultyStats.objectSpawnTime.y;
@@ -156,7 +161,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ChooseSpawn(Transform parent, int minDistance, out int index)
+    void ChooseSpawn(Transform parent, int minDistance, out int index) //Set correct spawn places
     {
         float distance = -1;
         index = 0;

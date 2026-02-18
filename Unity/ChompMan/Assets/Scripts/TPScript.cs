@@ -7,7 +7,7 @@ public class TPScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<CharacterController>() != null)
+        if (other.GetComponent<CharacterController>() != null) //Move between portals
         {
             tpEnd.GetComponentInParent<BoxCollider>().enabled = false;
             other.transform.SetPositionAndRotation(tpEnd.position, Quaternion.identity);
