@@ -108,3 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bba658244b0c824788e2294edb2c77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DotScript
+  dotPickedVFX: {fileID: 8926484042661614526, guid: 969ef777e2a496643967b9b8c070cbcc,
+    type: 3}

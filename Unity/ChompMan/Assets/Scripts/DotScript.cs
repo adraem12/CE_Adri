@@ -8,8 +8,9 @@ public class DotScript : MonoBehaviour
         {
             GameManager.dotsLeft--;
             UIManager.Instance.UpdateDotsText();
-            Destroy(gameObject);
             SoundManager.instance.SetEffects(0);
+            Instantiate(GameManager.instance.destructionParticleSystem, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 }

@@ -36,8 +36,10 @@ public class EnemyController : MonoBehaviour
                 GameManager.enemiesLeft--;
                 GameManager.enemiesKilled++;
                 UIManager.Instance.UpdateEnemiesText();
-                Destroy(gameObject);
+                ParticleSystem.MainModule particleSystem = Instantiate(GameManager.instance.destructionParticleSystem, transform.position, Quaternion.identity).GetComponent<ParticleSystem>().main;
+                particleSystem.startColor = new Color(0, 1, 1);
                 SoundManager.instance.SetEffects(1);
+                Destroy(gameObject);
             }
         }
     }

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemySpawnParent, cherrySpawnParent, dotPositionsParent, dotsParent;
     [Header("Prefabs")]
     public GameObject cherryPrefab;
-    public GameObject smallGhost, bigGhost, dotPrefab;
+    public GameObject smallGhost, bigGhost, dotPrefab, destructionParticleSystem;
     public Controls controls;
     DifficultyStats difficultyStats;
     int objectSpawnTime, enemySpawnTime;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public static bool cherryState;
     public static float timer;
     Transform[] dotPositions;
-    int lastDifficulty = 0;
+    public static int lastDifficulty = 0;
 
     private void Awake()
     {
@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
         controls = new();
         difficultyStats = GetComponent<DifficultyStats>();
         dotPositions = dotPositionsParent.GetComponentsInChildren<Transform>();
-        SoundManager.instance.SetMusic(0);
     }
 
     public void StartNewGame(int difficulty) //Set new game variables
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour
         enemiesLeft = 0;
         enemiesKilled = 0;
         timer = 0;
+        player.transform.SetPositionAndRotation(new Vector3(0, 0, 4), Quaternion.Euler(0, 0, 0));
         if (difficulty == -1)
             difficulty = lastDifficulty;
         else

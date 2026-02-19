@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        SetMusic(0);
     }
 
     public void SetMusic(int clip) //Change music clip
