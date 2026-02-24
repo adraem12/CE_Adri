@@ -22,6 +22,7 @@
 *.assbin
 *.spp.painter_lock
 *_autosave_0.spp
+*_autosave_1.spp
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
