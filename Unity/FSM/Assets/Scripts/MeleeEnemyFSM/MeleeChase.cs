@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Chase : State
+public class MeleeChase : MeleeState
 {
-    public Chase(GameObject newAgentToSet) : base(newAgentToSet)
+    public MeleeChase(GameObject newAgentToSet, MeleeEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
     {
         name = STATE.CHASE; // Guardamos el nombre del estado en el que nos encontramos.
     }
@@ -21,12 +21,12 @@ public class Chase : State
         agent.GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
         if (IsAtAttackDistance())
         {
-            nextState = new Attack(agent); // Si el NPC puede atacar al jugador, lo ponemos a atacar.
+            nextState = new MeleeAttack(agent, enemyAI); // Si el NPC puede atacar al jugador, lo ponemos a atacar.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a ATACAR.
         }
         else if (!IsAtChaseDistance())
         {
-            nextState = new Patrol(agent); // Si el NPC no puede persegur al jugador, lo ponemos a vigilar.
+            nextState = new MeleePatrol(agent, enemyAI); // Si el NPC no puede persegur al jugador, lo ponemos a vigilar.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a PATRULLAR.
         }
     }

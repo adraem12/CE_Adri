@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyAI: MonoBehaviour
+public class MeleeEnemyAI: MonoBehaviour
 {
-    State FSM;
+    MeleeState FSM;
+    public float chaseDistance, attackDistance;
 
     void Start()
     {
-        FSM = new Patrol(gameObject); // CREAMOS EL ESTADO INICIAL DEL NPC
+        FSM = new MeleePatrol(gameObject, this); // CREAMOS EL ESTADO INICIAL DEL NPC
     }
 
     void Update()
@@ -29,7 +30,7 @@ public class EnemyAI: MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("attacando");
+            Debug.Log("atacando");
             yield return new WaitForSeconds(1);
         }
     }

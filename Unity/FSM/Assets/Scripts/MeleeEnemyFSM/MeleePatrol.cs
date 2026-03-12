@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Patrol : State
+public class MeleePatrol : MeleeState
 {
-    public Patrol(GameObject newAgentToSet) : base(newAgentToSet)
+    public MeleePatrol(GameObject newAgentToSet, MeleeEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
     {
         name = STATE.PATROL; // Guardamos el nombre del estado en el que nos encontramos.
     }
@@ -20,7 +20,7 @@ public class Patrol : State
     {
         if (IsAtChaseDistance()) // Le decimos que se vaya moviendo y patrullando...
         {
-            nextState = new Chase(agent);
+            nextState = new MeleeChase(agent, enemyAI);
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de VIGILAR a PERSEGUIR.
         }
     }

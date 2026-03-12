@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Attack : State
+public class ShooterAttack : ShooterState
 {
-    public Attack(GameObject newAgentToSet) : base(newAgentToSet)
+    public ShooterAttack(GameObject newAgentToSet, ShooterEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
     {
         name = STATE.ATTACK; // Guardamos el nombre del estado en el que nos encontramos.
     }
@@ -13,15 +13,16 @@ public class Attack : State
         // Le pondríamos la animación de disparar, o lo que sea...
         base.Entry();
         agent.GetComponent<Renderer>().material.color = Color.red;
-        agent.GetComponent<NavMeshAgent>().isStopped = true;
-        agent.GetComponent<EnemyAI>().StartAttacking();
+        agent.GetComponent<NavMeshAgent>().isStopped = true;       
+        agent.GetComponent<ShooterEnemyAI>().StartAttacking();
     }
 
     public override void Updating()
     {
+        agent.transform.LookAt(player.transform.position);
         if (!IsAtAttackDistance())
         {
-            nextState = new Chase(agent); // Si el NPC no puede atacar al jugador, lo ponemos a perseguir.
+            nextState = new ShooterChase(agent, enemyAI); // Si el NPC no puede atacar al jugador, lo ponemos a perseguir.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de ATACAR a PERSEGUIR.
         }
     }
@@ -29,7 +30,7 @@ public class Attack : State
     public override void Exit()
     {
         // Le resetearíamos la animación de disparar, o lo que sea...
-        agent.GetComponent<EnemyAI>().StopAttacking();
+        agent.GetComponent<ShooterEnemyAI>().StopAttacking();
         base.Exit();
     }
 }
