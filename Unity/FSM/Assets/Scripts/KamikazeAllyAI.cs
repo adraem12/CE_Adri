@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class MeleeEnemyAI: MonoBehaviour
+public class KamikazeAllyAI : MonoBehaviour
 {
-    MeleeState FSM;
-    public float chaseDistance, attackDistance, attackTimer;
+    KamikazeAllyState FSM;
+    public float chaseDistance, attackDistance;
 
     void Start()
     {
-        FSM = new MeleePatrol(gameObject, this); // CREAMOS EL ESTADO INICIAL DEL NPC
+        FSM = new KamikazeAllyPatrol(gameObject, this); // CREAMOS EL ESTADO INICIAL DEL NPC
     }
 
     void Update()
@@ -31,7 +31,7 @@ public class MeleeEnemyAI: MonoBehaviour
         while (true)
         {
             Debug.Log("atacando");
-            yield return new WaitForSeconds(attackTimer);
+            yield return new WaitForSeconds(1f);
         }
     }
 }

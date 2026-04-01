@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class ShooterState
+public class KamikazeAllyState
 {
     protected GameObject agent;
-    protected ShooterEnemyAI enemyAI;
+    protected KamikazeAllyAI allyAI;
     protected GameObject player;
     public float attackDistance, chaseDistance;
 
@@ -14,16 +14,16 @@ public class ShooterState
     public enum EVENT { ENTER, UPDATE, EXIT };
     public STATE name; // Para guardar el nombre del estado
     protected EVENT actualFase; // Para guardar la fase en la que nos encontramos
-    protected ShooterState nextState; // El estado que se EJECUTARÁ A CONTINUACIÓN del estado actual
+    protected KamikazeAllyState nextState; // El estado que se EJECUTARÁ A CONTINUACIÓN del estado actual
 
     // Constructor
-    public ShooterState(GameObject agentToSet, ShooterEnemyAI enemyAI) 
-    { 
+    public KamikazeAllyState(GameObject agentToSet, KamikazeAllyAI allyAI)
+    {
         agent = agentToSet;
         player = GameManager.instance.player;
-        this.enemyAI = enemyAI;
-        attackDistance = enemyAI.attackDistance;
-        chaseDistance = enemyAI.chaseDistance;
+        this.allyAI = allyAI;
+        attackDistance = allyAI.attackDistance;
+        chaseDistance = allyAI.chaseDistance;
     }
 
     // Las fases de cada estado
@@ -32,11 +32,11 @@ public class ShooterState
     public virtual void Exit() { actualFase = EVENT.EXIT; } // La fase de SALIR es la última antes de cambiar de ESTADO, aquí deberiamos limpiar lo que haga falta.
 
     // Este es la función a la que llamaremos para que el NPC inicie la máquina de estados. Vincula los EVENTOS con las funciones que ejecuta cada uno
-    public ShooterState Process()
+    public KamikazeAllyState Process()
     {
-        if (actualFase == EVENT.ENTER) 
+        if (actualFase == EVENT.ENTER)
             Entry();
-        if (actualFase == EVENT.UPDATE) 
+        if (actualFase == EVENT.UPDATE)
             Updating();
         if (actualFase == EVENT.EXIT)
         {

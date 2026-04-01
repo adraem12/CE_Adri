@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ShooterPatrol : ShooterState
+public class KamikazeAllyPatrol : KamikazeAllyState
 {
-    public ShooterPatrol(GameObject newAgentToSet, ShooterEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
+    public KamikazeAllyPatrol(GameObject newAgentToSet, KamikazeAllyAI newAllyAI) : base(newAgentToSet, newAllyAI)
     {
         name = STATE.PATROL; // Guardamos el nombre del estado en el que nos encontramos.
     }
 
     public override void Entry()
     {
-        // Le pondriamos la animaciÃ³n de andar, calcular los puntos por los que patrulla, etc...
+        // Le pondriamos la animación de andar, calcular los puntos por los que patrulla, etc...
         base.Entry();
         agent.GetComponent<Renderer>().material.color = Color.darkOliveGreen;
         agent.GetComponent<NavMeshAgent>().isStopped = true;
@@ -20,14 +20,14 @@ public class ShooterPatrol : ShooterState
     {
         if (IsAtChaseDistance()) // Le decimos que se vaya moviendo y patrullando...
         {
-            nextState = new ShooterChase(agent, enemyAI);
+            nextState = new KamikazeAllyChase(agent, allyAI);
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de VIGILAR a PERSEGUIR.
         }
     }
 
     public override void Exit()
     {
-        // Le resetearï¿½amos la animaciï¿½n de andar, o lo que sea...
+        // Le resetear?amos la animaci?n de andar, o lo que sea...
         base.Exit();
     }
 }

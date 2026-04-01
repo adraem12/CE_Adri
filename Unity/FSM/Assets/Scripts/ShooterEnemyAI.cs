@@ -4,9 +4,8 @@ using UnityEngine;
 public class ShooterEnemyAI: MonoBehaviour
 {
     ShooterState FSM;
-    public float chaseDistance, attackDistance, projectileForce;
+    public float chaseDistance, attackDistance, projectileForce, attackTimer;
     public GameObject projectilePrefab;
-    float attackTimer;
 
     void Start()
     {
@@ -35,7 +34,7 @@ public class ShooterEnemyAI: MonoBehaviour
             Debug.Log("atacando");
             Rigidbody bullet = Instantiate(projectilePrefab, transform.position + transform.forward * 0.75f, Quaternion.identity).GetComponent<Rigidbody>();
             bullet.AddForce((GameManager.instance.player.transform.position - transform.position).normalized * projectileForce, ForceMode.Impulse);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(attackTimer);
         }
     }
 }

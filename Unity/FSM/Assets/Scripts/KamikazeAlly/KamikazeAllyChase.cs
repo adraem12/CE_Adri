@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ShooterChase : ShooterState
+public class KamikazeAllyChase : KamikazeAllyState
 {
-    public ShooterChase(GameObject newAgentToSet, ShooterEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
+    public KamikazeAllyChase(GameObject newAgentToSet, KamikazeAllyAI newAllyAI) : base(newAgentToSet, newAllyAI)
     {
         name = STATE.CHASE; // Guardamos el nombre del estado en el que nos encontramos.
     }
@@ -21,12 +21,12 @@ public class ShooterChase : ShooterState
         agent.GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
         if (IsAtAttackDistance())
         {
-            nextState = new ShooterAttack(agent, enemyAI); // Si el NPC puede atacar al jugador, lo ponemos a atacar.
+            nextState = new KamikazeAllyAttack(agent, allyAI); // Si el NPC puede atacar al jugador, lo ponemos a atacar.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a ATACAR.
         }
         else if (!IsAtChaseDistance())
         {
-            nextState = new ShooterPatrol(agent, enemyAI); // Si el NPC no puede persegur al jugador, lo ponemos a vigilar.
+            nextState = new KamikazeAllyPatrol(agent, allyAI); // Si el NPC no puede persegur al jugador, lo ponemos a vigilar.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a PATRULLAR.
         }
     }
