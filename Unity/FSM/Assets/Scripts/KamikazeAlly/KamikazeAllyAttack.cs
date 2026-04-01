@@ -14,23 +14,17 @@ public class KamikazeAllyAttack : KamikazeAllyState
         base.Entry();
         agent.GetComponent<Renderer>().material.color = Color.indianRed;
         agent.GetComponent<NavMeshAgent>().isStopped = true;
-        agent.GetComponent<ShooterEnemyAI>().StartAttacking();
+        agent.GetComponent<KamikazeAllyAI>().Attack(nearestEnemy);
     }
 
     public override void Updating()
     {
+        SearchForNearestEnemy();
         agent.transform.LookAt(player.transform.position);
         if (!IsAtAttackDistance())
         {
             nextState = new KamikazeAllyChase(agent, allyAI); // Si el NPC no puede atacar al jugador, lo ponemos a perseguir.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de ATACAR a PERSEGUIR.
         }
-    }
-
-    public override void Exit()
-    {
-        // Le resetearíamos la animación de disparar, o lo que sea...
-        agent.GetComponent<KamikazeAllyAI>().StopAttacking();
-        base.Exit();
     }
 }

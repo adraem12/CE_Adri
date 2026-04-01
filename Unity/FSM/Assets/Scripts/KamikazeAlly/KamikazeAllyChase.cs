@@ -18,17 +18,21 @@ public class KamikazeAllyChase : KamikazeAllyState
 
     public override void Updating()
     {
+        SearchForNearestEnemy();
         agent.GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
+        agent.GetComponent<NavMeshAgent>().isStopped = Vector3.Distance(agent.transform.position, player.transform.position) < 1f;
         if (IsAtAttackDistance())
         {
             nextState = new KamikazeAllyAttack(agent, allyAI); // Si el NPC puede atacar al jugador, lo ponemos a atacar.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a ATACAR.
         }
+        /*
         else if (!IsAtChaseDistance())
         {
             nextState = new KamikazeAllyPatrol(agent, allyAI); // Si el NPC no puede persegur al jugador, lo ponemos a vigilar.
             actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a PATRULLAR.
         }
+        */
     }
 
     public override void Exit()

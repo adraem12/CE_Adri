@@ -16,22 +16,9 @@ public class KamikazeAllyAI : MonoBehaviour
         FSM = FSM.Process(); // Ejecutamos LA FSM
     }
 
-    public void StartAttacking()
+    public void Attack(GameObject enemy)
     {
-        StartCoroutine(AttackRoutine());
-    }
-
-    public void StopAttacking()
-    {
-        StopAllCoroutines();
-    }
-
-    IEnumerator AttackRoutine()
-    {
-        while (true)
-        {
-            Debug.Log("atacando");
-            yield return new WaitForSeconds(1f);
-        }
+        DestroyImmediate(enemy);
+        DestroyImmediate(gameObject);
     }
 }

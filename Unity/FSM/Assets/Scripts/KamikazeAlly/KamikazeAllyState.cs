@@ -5,6 +5,7 @@ public class KamikazeAllyState
     protected GameObject agent;
     protected KamikazeAllyAI allyAI;
     protected GameObject player;
+    protected GameObject nearestEnemy;
     public float attackDistance, chaseDistance;
 
     // 'ESTADOS' que tiene el NPC
@@ -49,7 +50,7 @@ public class KamikazeAllyState
     // Comprueba si el enemigo está cerca
     protected bool IsAtAttackDistance()
     {
-        if (Vector3.Distance(agent.transform.position, player.transform.position) < attackDistance)
+        if (nearestEnemy != null && Vector3.Distance(agent.transform.position, nearestEnemy.transform.position) < attackDistance)
             return true;
         else
             return false;
@@ -58,9 +59,14 @@ public class KamikazeAllyState
     // Comprueba si el enemigo está visible
     protected bool IsAtChaseDistance()
     {
-        if (Vector3.Distance(agent.transform.position, player.transform.position) >= chaseDistance)
-            return false;
-        else
+        if (Vector3.Distance(agent.transform.position, player.transform.position) < chaseDistance)
             return true;
+        else
+            return false;
+    }
+
+    protected void SearchForNearestEnemy()
+    {
+
     }
 }

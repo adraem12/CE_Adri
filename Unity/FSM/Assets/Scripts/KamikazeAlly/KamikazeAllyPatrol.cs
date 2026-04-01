@@ -12,7 +12,7 @@ public class KamikazeAllyPatrol : KamikazeAllyState
     {
         // Le pondriamos la animación de andar, calcular los puntos por los que patrulla, etc...
         base.Entry();
-        agent.GetComponent<Renderer>().material.color = Color.darkOliveGreen;
+        agent.GetComponent<Renderer>().material.color = Color.pink;
         agent.GetComponent<NavMeshAgent>().isStopped = true;
     }
 
