@@ -31,7 +31,6 @@ public class ShooterEnemyAI: MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("atacando");
             Rigidbody bullet = Instantiate(projectilePrefab, transform.position + transform.forward * 0.75f, Quaternion.identity).GetComponent<Rigidbody>();
             bullet.AddForce((GameManager.instance.player.transform.position - transform.position).normalized * projectileForce, ForceMode.Impulse);
             yield return new WaitForSeconds(attackTimer);
