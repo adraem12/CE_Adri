@@ -9,12 +9,12 @@ public class ShooterEnemyAI: MonoBehaviour
 
     void Start()
     {
-        FSM = new ShooterPatrol(gameObject, this); // CREAMOS EL ESTADO INICIAL DEL NPC
+        FSM = new ShooterPatrol(gameObject, this);
     }
 
     void Update()
     {
-        FSM = FSM.Process(); // Ejecutamos LA FSM
+        FSM = FSM.Process();
     }
 
     public void StartAttacking()
@@ -31,7 +31,7 @@ public class ShooterEnemyAI: MonoBehaviour
     {
         while (true)
         {
-            Rigidbody bullet = Instantiate(projectilePrefab, transform.position + transform.forward * 0.75f, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody bullet = Instantiate(projectilePrefab, transform.position + transform.forward * 0.76f, Quaternion.identity).GetComponent<Rigidbody>();
             bullet.AddForce((GameManager.instance.player.transform.position - transform.position).normalized * projectileForce, ForceMode.Impulse);
             yield return new WaitForSeconds(attackTimer);
         }

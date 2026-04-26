@@ -272,5 +272,5 @@ MonoBehaviour:
   chaseDistance: 20
   attackDistance: 10
   projectileForce: 30
-  attackTimer: 2.5
+  attackTimer: 5
   projectilePrefab: {fileID: 8603325752434926117, guid: 51cfe7f5c41449242bfaccc30a7952ee, type: 3}

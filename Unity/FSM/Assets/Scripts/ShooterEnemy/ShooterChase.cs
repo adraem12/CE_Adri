@@ -5,35 +5,33 @@ public class ShooterChase : ShooterState
 {
     public ShooterChase(GameObject newAgentToSet, ShooterEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
     {
-        name = STATE.CHASE; // Guardamos el nombre del estado en el que nos encontramos.
+        name = STATE.CHASE;
     }
 
     public override void Entry()
     {
-        // Le pondríamos la animación de disparar, o lo que sea...
         base.Entry();
-        agent.GetComponent<Renderer>().material.color = Color.yellowGreen;
+        agent.GetComponent<Renderer>().material.color = Color.yellow;
         agent.GetComponent<NavMeshAgent>().isStopped = false;
     }
 
     public override void Updating()
     {
         agent.GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
-        if (IsAtAttackDistance())
+        if (IsAtAttackDistance() && CanSeePlayer())
         {
-            nextState = new ShooterAttack(agent, enemyAI); // Si el NPC puede atacar al jugador, lo ponemos a atacar.
-            actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a ATACAR.
+            nextState = new ShooterAttack(agent, enemyAI);
+            actualFase = EVENT.EXIT;
         }
         else if (!IsAtChaseDistance())
         {
-            nextState = new ShooterPatrol(agent, enemyAI); // Si el NPC no puede persegur al jugador, lo ponemos a vigilar.
-            actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de PERSEGUIR a PATRULLAR.
+            nextState = new ShooterPatrol(agent, enemyAI);
+            actualFase = EVENT.EXIT;
         }
     }
 
     public override void Exit()
     {
-        // Le resetearíamos la animación de disparar, o lo que sea...
         base.Exit();
     }
 }

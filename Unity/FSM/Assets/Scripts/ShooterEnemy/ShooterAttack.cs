@@ -3,33 +3,64 @@ using UnityEngine.AI;
 
 public class ShooterAttack : ShooterState
 {
+    Vector3 lastplayerPosition;
+    bool shooting;
+
     public ShooterAttack(GameObject newAgentToSet, ShooterEnemyAI newEnemyAI) : base(newAgentToSet, newEnemyAI)
     {
-        name = STATE.ATTACK; // Guardamos el nombre del estado en el que nos encontramos.
+        name = STATE.ATTACK;
     }
 
     public override void Entry()
     {
-        // Le pondríamos la animación de disparar, o lo que sea...
         base.Entry();
+        lastplayerPosition = player.transform.position;
         agent.GetComponent<Renderer>().material.color = Color.indianRed;
-        agent.GetComponent<NavMeshAgent>().isStopped = true;       
+        agent.GetComponent<NavMeshAgent>().isStopped = true;
+        shooting = true;
         agent.GetComponent<ShooterEnemyAI>().StartAttacking();
     }
 
     public override void Updating()
     {
-        agent.transform.LookAt(player.transform.position);
-        if (!IsAtAttackDistance())
+        agent.transform.LookAt(lastplayerPosition);
+        if (!CanSeePlayer())
         {
-            nextState = new ShooterChase(agent, enemyAI); // Si el NPC no puede atacar al jugador, lo ponemos a perseguir.
-            actualFase = EVENT.EXIT; // Cambiamos de FASE ya que pasamos de ATACAR a PERSEGUIR.
+            if (shooting)
+                SetFindPlayer();
+            if (agent.transform.position == lastplayerPosition)
+            {
+                nextState = new ShooterChase(agent, enemyAI);
+                actualFase = EVENT.EXIT;
+            }
         }
+        else
+        {
+            lastplayerPosition = player.transform.position;
+            if (shooting && !IsAtAttackDistance())
+                SetFindPlayer();
+            if (!shooting && IsAtAttackDistance())
+                SetAttackPlayer();
+        }
+    }
+
+    void SetFindPlayer()
+    {
+        shooting = false;
+        agent.GetComponent<NavMeshAgent>().isStopped = false;
+        agent.GetComponent<NavMeshAgent>().SetDestination(lastplayerPosition);
+        agent.GetComponent<ShooterEnemyAI>().StopAttacking();
+    }
+
+    void SetAttackPlayer()
+    {
+        shooting = true;
+        agent.GetComponent<NavMeshAgent>().isStopped = true;
+        agent.GetComponent<ShooterEnemyAI>().StartAttacking();
     }
 
     public override void Exit()
     {
-        // Le resetearíamos la animación de disparar, o lo que sea...
         agent.GetComponent<ShooterEnemyAI>().StopAttacking();
         base.Exit();
     }
