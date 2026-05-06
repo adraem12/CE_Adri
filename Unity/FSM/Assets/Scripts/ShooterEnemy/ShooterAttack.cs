@@ -24,6 +24,7 @@ public class ShooterAttack : ShooterState
     public override void Updating()
     {
         agent.transform.LookAt(lastplayerPosition);
+        agent.GetComponent<NavMeshAgent>().SetDestination(lastplayerPosition);
         if (!CanSeePlayer())
         {
             if (shooting)
@@ -48,7 +49,6 @@ public class ShooterAttack : ShooterState
     {
         shooting = false;
         agent.GetComponent<NavMeshAgent>().isStopped = false;
-        agent.GetComponent<NavMeshAgent>().SetDestination(lastplayerPosition);
         agent.GetComponent<ShooterEnemyAI>().StopAttacking();
     }
 
